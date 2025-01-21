@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -6,15 +7,88 @@ using UnityEngine;
 public class CircleGen : MonoBehaviour
 {
     public Bubble bubble;
-    public LineRenderer line;
+    public GameObject linePrefab;
+    public Transform lineParent;
     public int numOfPoints;
+    public int numOfLines;
+    [Header("line params")]
+    public AnimationCurve lineWidth;
+
+    [HideInInspector] [SerializeField] LineRenderer[] lines;
+    float centerDist;
     void OnValidate(){
-        DrawEllipsePolar();
+        InitLineRenderers();
+        UpdateCircles();
     }
-    void DrawEllipsePolar()
+    void Start(){
+        InitLineRenderers();
+    }
+    [ContextMenu("re init")]
+    void InitCompletely(){
+        for(int i=0;i<numOfLines;++i){
+            lines[i] = Instantiate(linePrefab, lineParent).GetComponent<LineRenderer>();
+            lines[i].positionCount=numOfPoints;
+            lines[i].widthCurve=lineWidth;
+        }
+    }
+    void InitLineRenderers(){
+        if(lines!=null){
+            foreach(LineRenderer line in lines){
+                if(line==null){
+                    lines=new LineRenderer[numOfLines];
+                    for(int i=0;i<numOfLines;++i){
+                        lines[i] = Instantiate(linePrefab, lineParent).GetComponent<LineRenderer>();
+                        lines[i].positionCount=numOfPoints;
+                        lines[i].widthCurve=lineWidth;
+                    }
+                    break;
+                }
+            }
+        }
+        if(lines==null){
+            lines=new LineRenderer[numOfLines];
+            for(int i=0;i<numOfLines;++i){
+                lines[i] = Instantiate(linePrefab, lineParent).GetComponent<LineRenderer>();
+            }
+        } else if(lines.Length<numOfLines){
+            LineRenderer[] oldLines=lines;
+            lines=new LineRenderer[numOfLines];
+            Array.Copy(oldLines, lines, oldLines.Length);
+            for(int i=oldLines.Length;i<lines.Length;++i){
+                lines[i] = Instantiate(linePrefab, lineParent).GetComponent<LineRenderer>();
+            }
+        } else if(lines.Length>numOfLines){
+            LineRenderer[] oldLines=lines;
+            lines=new LineRenderer[numOfLines];
+            Array.Copy(oldLines, lines, lines.Length);
+            for(int i=lines.Length;i<oldLines.Length;++i){
+                if(oldLines[i]!=null){
+                    if(Application.isPlaying)
+                        Destroy(oldLines[i].gameObject);
+                    else
+                        DestroyImmediate(oldLines[i].gameObject);
+                }
+            }
+        }
+        for(int i=0;i<numOfLines;++i){
+            lines[i].positionCount=numOfPoints;
+            lines[i].widthCurve=lineWidth;
+        }
+    }
+    void UpdateCircles(){
+        centerDist=((Vector2)(bubble.player.position-bubble.transform.position)).magnitude;
+        //0-numOfLines: inside to outside
+        for(int i=0;i<numOfLines;++i){
+            DrawEllipsePolar(i, (i+1f)/numOfLines, 1-((i+1f)/numOfLines));
+        }
+    }
+    void DrawEllipsePolar(int lineIdx, float scale, float distortionDamp)
     {
-        float a = transform.localScale.x; // 长半轴
-        float b = transform.localScale.y;  // 短半轴
+        LineRenderer line=lines[lineIdx];
+
+        float a_unscaled=transform.localScale.x;
+        float a = Mathf.Lerp(transform.localScale.x,1,distortionDamp)*scale; // 长半轴
+        float b = transform.localScale.y*scale;  // 短半轴
         float aa=a*a;
         float bb=b*b;
         float aabb=a*a*b*b;
@@ -27,6 +101,7 @@ public class CircleGen : MonoBehaviour
             float r = Mathf.Sqrt( aabb / (bb * cos*cos + aa * sin*sin));
             float xpos = r * cos;
             float ypos = r * sin;
+            xpos+=(a-a_unscaled)*Mathf.Clamp01(centerDist/bubble.radius);
             Vector2 pos=MathUtil.Rotate(new Vector2(xpos,ypos)*bubble.radius, transform.eulerAngles.z*Mathf.Deg2Rad);
             line.SetPosition(i, transform.position+(Vector3)pos);
         }
@@ -35,6 +110,6 @@ public class CircleGen : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        DrawEllipsePolar();
+        UpdateCircles();
     }
 }

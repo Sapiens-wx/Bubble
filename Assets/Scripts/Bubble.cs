@@ -7,14 +7,21 @@ public class Bubble : MonoBehaviour
 {
     public Transform player;
     public float radius, radius1, radius2;
+    public float spd;
+    [Header("Animation")]
+    public float animDuration;
 
     public static Bubble inst;
     Rigidbody2D rgb;
     Camera mainCam;
-    bool mouseDown, lastFrameInsideRadius;
+    bool mouseDown, insideRadius, lastFrameInsideRadius;
     Vector2 mouseWorldPos;
     Vector2 shootDir, shootOrigin;
     float shootDist;
+
+    public float ShootDist{
+        get=>shootDist;
+    }
     void OnDrawGizmosSelected(){
         Gizmos.DrawWireSphere(transform.position, radius);
         Gizmos.color=Color.green;
@@ -46,7 +53,7 @@ public class Bubble : MonoBehaviour
     /// <summary>
     /// center: transform.position
     /// </summary>
-    bool InsideRadius(float r, Vector2 mousePos){
+    bool IsInsideRadius(float r, Vector2 mousePos){
         Vector2 dir=mousePos-(Vector2)transform.position;
         float distSqr=dir.x*dir.x+dir.y*dir.y;
         return distSqr<=r*r;
@@ -61,18 +68,18 @@ public class Bubble : MonoBehaviour
             mouseWorldPos=MouseWorldPos();
             mouseDown=false;
             //animation
-            transform.DOScaleX(1, .4f);
+            transform.DOScaleX(1, animDuration).SetEase(Ease.OutElastic);
             if(shootDist>radius)
-                transform.DOMove(shootOrigin, .4f);
-            player.DOLocalMove(Vector3.zero,.4f);
+                transform.DOMove(shootOrigin, animDuration);
+            player.DOLocalMove(Vector3.zero, animDuration).SetEase(Ease.OutElastic);
             //movement
-            rgb.velocity=shootDir*(shootDist/radius);
+            rgb.velocity=shootDir*(spd*shootDist/radius);
         }
     }
     void FixedUpdate(){
         if(mouseDown){
             mouseWorldPos=MouseWorldPos();
-            bool insideRadius=InsideRadius(radius, mouseWorldPos);
+            insideRadius=IsInsideRadius(radius, mouseWorldPos);
             if(!insideRadius&&lastFrameInsideRadius){ //the bubble begins to distort: compute origin
                 //shootOrigin=transform.position;
             } else if(insideRadius&&!lastFrameInsideRadius){ //if the player changes from outside radius to inside radius, then reset the position of the bubble
@@ -82,8 +89,9 @@ public class Bubble : MonoBehaviour
             shootDir=shootOrigin-mouseWorldPos;
             shootDist=shootDir.magnitude;
             shootDir/=shootDist;
+            //adjust rotation
+            transform.eulerAngles=new Vector3(0,0,Vector2.SignedAngle(Vector2.right, shootDir));
             if(!insideRadius){ //distort
-                transform.eulerAngles=new Vector3(0,0,Vector2.SignedAngle(Vector2.right, shootDir));
                 transform.position=(mouseWorldPos+shootOrigin+shootDir*radius)/2;
                 Vector3 scale=Vector3.one;
                 scale.x=(shootDist+radius)/2/radius;
