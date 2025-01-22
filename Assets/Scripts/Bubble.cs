@@ -10,9 +10,10 @@ public class Bubble : MonoBehaviour
     public float spd;
     [Header("Animation")]
     public float animDuration;
+    [Header("Components")]
+    public Rigidbody2D rgb;
 
     public static Bubble inst;
-    Rigidbody2D rgb;
     Camera mainCam;
     bool mouseDown, insideRadius, lastFrameInsideRadius;
     Vector2 mouseWorldPos;
@@ -36,7 +37,6 @@ public class Bubble : MonoBehaviour
     void Start()
     {
         mainCam=Camera.main;
-        rgb=GetComponent<Rigidbody2D>();
     }
     Vector2 MouseWorldPos(){
         return mainCam.ScreenToWorldPoint(Input.mousePosition);
@@ -58,50 +58,69 @@ public class Bubble : MonoBehaviour
         float distSqr=dir.x*dir.x+dir.y*dir.y;
         return distSqr<=r*r;
     }
+    /// <summary>
+    /// center: transform.position
+    /// </summary>
+    bool IsInsideRadius(float r, Vector2 center, Vector2 mousePos){
+        Vector2 dir=mousePos-center;
+        float distSqr=dir.x*dir.x+dir.y*dir.y;
+        return distSqr<=r*r;
+    }
     // Update is called once per frame
     void Update()
     {
         if(Input.GetMouseButtonDown(0)&&MouseInsideRadius(radius)){
             mouseDown=true;
-            shootOrigin=transform.position;
         } else if(Input.GetMouseButtonUp(0)&&mouseDown){
-            mouseWorldPos=MouseWorldPos();
             mouseDown=false;
             //animation
-            transform.DOScaleX(1, animDuration).SetEase(Ease.OutElastic);
+            transform.DOScaleX(1, animDuration).SetEase(Ease.OutCirc);
             if(shootDist>radius)
-                transform.DOMove(shootOrigin, animDuration);
-            player.DOLocalMove(Vector3.zero, animDuration).SetEase(Ease.OutElastic);
+                transform.DOLocalMove(Vector3.zero, animDuration);
+            player.DOLocalMove(Vector3.zero, animDuration).SetEase(Ease.OutCirc);
             //movement
-            rgb.velocity=shootDir*(spd*shootDist/radius);
+            if(IsInsideRadius(radius1, transform.parent.position, mouseWorldPos)){ //move
+                rgb.velocity=shootDir*(spd*shootDist/radius);
+            } else{ //get out from the bubble
+            }
         }
+        if(Input.GetKeyDown(KeyCode.A))
+            rgb.velocity=Vector2.left*spd;
+        else if(Input.GetKeyDown(KeyCode.W))
+            rgb.velocity=Vector2.up*spd;
     }
     void FixedUpdate(){
         if(mouseDown){
             mouseWorldPos=MouseWorldPos();
+            //update shoot parameters
+            shootOrigin=transform.parent.position;
+            shootDir=shootOrigin-mouseWorldPos;
+            shootDist=shootDir.magnitude;
+            shootDir/=shootDist;
+
             insideRadius=IsInsideRadius(radius, mouseWorldPos);
             if(!insideRadius&&lastFrameInsideRadius){ //the bubble begins to distort: compute origin
                 //shootOrigin=transform.position;
             } else if(insideRadius&&!lastFrameInsideRadius){ //if the player changes from outside radius to inside radius, then reset the position of the bubble
-                transform.position=shootOrigin;
+                transform.localPosition=Vector3.zero;
                 transform.localScale=Vector3.one;
             }
-            shootDir=shootOrigin-mouseWorldPos;
-            shootDist=shootDir.magnitude;
-            shootDir/=shootDist;
+            //limit the drag distance
+            if(!IsInsideRadius(radius2, transform.parent.position, mouseWorldPos)){ 
+                mouseWorldPos=shootOrigin-shootDir*radius2;
+                shootDir=shootOrigin-mouseWorldPos;
+                shootDist=shootDir.magnitude;
+                shootDir/=shootDist;
+            }
             //adjust rotation
             transform.eulerAngles=new Vector3(0,0,Vector2.SignedAngle(Vector2.right, shootDir));
             if(!insideRadius){ //distort
-                transform.position=(mouseWorldPos+shootOrigin+shootDir*radius)/2;
+                transform.localPosition=(mouseWorldPos+shootOrigin+shootDir*radius)/2-(Vector2)transform.parent.position;
                 Vector3 scale=Vector3.one;
                 scale.x=(shootDist+radius)/2/radius;
                 transform.localScale=scale;
             }
             player.transform.position=mouseWorldPos;
-            /*
-            if(InsideRadius(radius1, mouseWorldPos)){ //move
-            } else{ //get out from the bubble
-            }*/
             lastFrameInsideRadius=insideRadius;
         }
     }

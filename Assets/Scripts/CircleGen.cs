@@ -12,7 +12,8 @@ public class CircleGen : MonoBehaviour
     public int numOfPoints;
     public int numOfLines;
     [Header("line params")]
-    public AnimationCurve lineWidth;
+    public float lineWidth_v;
+    public AnimationCurve lineWidthEase;
 
     [HideInInspector] [SerializeField] LineRenderer[] lines;
     float centerDist;
@@ -28,7 +29,8 @@ public class CircleGen : MonoBehaviour
         for(int i=0;i<numOfLines;++i){
             lines[i] = Instantiate(linePrefab, lineParent).GetComponent<LineRenderer>();
             lines[i].positionCount=numOfPoints;
-            lines[i].widthCurve=lineWidth;
+            float width=lineWidth_v*lineWidthEase.Evaluate((i+1f)/numOfLines);
+            lines[i].widthCurve=AnimationCurve.Linear(0,width,1,width);
         }
     }
     void InitLineRenderers(){
@@ -38,8 +40,6 @@ public class CircleGen : MonoBehaviour
                     lines=new LineRenderer[numOfLines];
                     for(int i=0;i<numOfLines;++i){
                         lines[i] = Instantiate(linePrefab, lineParent).GetComponent<LineRenderer>();
-                        lines[i].positionCount=numOfPoints;
-                        lines[i].widthCurve=lineWidth;
                     }
                     break;
                 }
@@ -72,7 +72,8 @@ public class CircleGen : MonoBehaviour
         }
         for(int i=0;i<numOfLines;++i){
             lines[i].positionCount=numOfPoints;
-            lines[i].widthCurve=lineWidth;
+            float width=lineWidth_v*lineWidthEase.Evaluate((i+1f)/numOfLines);
+            lines[i].widthCurve=AnimationCurve.Linear(0,width,1,width);
         }
     }
     void UpdateCircles(){
