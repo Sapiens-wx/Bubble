@@ -1,0 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using DG.Tweening;
+
+public class FullyChargedEffect : MonoBehaviour
+{
+    public SpriteRenderer spr;
+    public float fromScale, toScale;
+    public float duration;
+
+    public static FullyChargedEffect inst;
+    Sequence sequence;
+    void Awake(){
+        inst=this;
+    }
+    void Start(){
+        sequence=DOTween.Sequence();
+        sequence.Append(transform.DOScale(toScale, duration));
+        sequence.Join(spr.DOFade(0, duration));
+        sequence.AppendCallback(()=>{
+            transform.localScale=new Vector3(fromScale, fromScale, fromScale);
+            spr.color=new Color(spr.color.r, spr.color.g, spr.color.b, 1);
+        });
+        sequence.SetLoops(-1);
+        Stop();
+    }
+    public void Play(){
+        gameObject.SetActive(true);
+        sequence.Restart();
+    }
+    public void Stop(){
+        gameObject.SetActive(false);
+        sequence.Pause();
+    }
+}

@@ -18,6 +18,7 @@ public class Bubble : MonoBehaviour
     public static Bubble inst;
     Camera mainCam;
     bool mouseDown, insideRadius, lastFrameInsideRadius;
+    float lastFrameShootDist;
     Vector2 mouseWorldPos;
     Vector2 shootDir, shootOrigin;
     float shootDist;
@@ -113,6 +114,8 @@ public class Bubble : MonoBehaviour
                     if(shootDist>radius)
                         transform.DOLocalMove(Vector3.zero, animDuration);
                     center.localPosition=Vector3.zero;
+                    //stop fully charged effect
+                    FullyChargedEffect.inst.Stop();
                     //movement
                     rgb.velocity=Vector2.zero;
                     player.OnShot(shootDir*(shootSpd*shootDist/radius));
@@ -143,6 +146,13 @@ public class Bubble : MonoBehaviour
                 shootDist=shootDir.magnitude;
                 shootDir/=shootDist;
             }
+            //detect if shootDist<radius1 or not and get the moment when shootDist changes from <radius1 to >=radius1 and vice versa
+            //the moment when shootDist changes from >=radius1 to <radius1
+            if(shootDist<radius1&&lastFrameShootDist>=radius1){ //stop the animation
+                FullyChargedEffect.inst.Stop();
+            } else if(shootDist>=radius1&&lastFrameShootDist<radius1){ //play the animation
+                FullyChargedEffect.inst.Play();
+            }
             //adjust rotation
             transform.eulerAngles=new Vector3(0,0,Vector2.SignedAngle(Vector2.right, shootDir));
             if(!insideRadius){ //distort
@@ -153,6 +163,7 @@ public class Bubble : MonoBehaviour
             }
             center.transform.position=mouseWorldPos;
             lastFrameInsideRadius=insideRadius;
+            lastFrameShootDist=shootDist;
         }
     }
 }

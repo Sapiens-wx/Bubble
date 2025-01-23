@@ -15,7 +15,7 @@ public class CircleGen : MonoBehaviour
     public float lineWidth_v;
     public AnimationCurve lineWidthEase;
 
-    [HideInInspector] [SerializeField] LineRenderer[] lines;
+    [HideInInspector] [SerializeField] Line[] lines;
     float centerDist;
     void OnValidate(){
         InitLineRenderers();
@@ -27,39 +27,39 @@ public class CircleGen : MonoBehaviour
     [ContextMenu("re init")]
     void InitCompletely(){
         for(int i=0;i<numOfLines;++i){
-            lines[i] = Instantiate(linePrefab, lineParent).GetComponent<LineRenderer>();
-            lines[i].positionCount=numOfPoints;
+            lines[i] = Instantiate(linePrefab, lineParent).GetComponent<Line>();
+            lines[i].lineRenderer.positionCount=numOfPoints;
             float width=lineWidth_v*lineWidthEase.Evaluate((i+1f)/numOfLines);
-            lines[i].widthCurve=AnimationCurve.Linear(0,width,1,width);
+            lines[i].lineRenderer.widthCurve=AnimationCurve.Linear(0,width,1,width);
         }
     }
     void InitLineRenderers(){
         if(lines!=null){
-            foreach(LineRenderer line in lines){
+            foreach(Line line in lines){
                 if(line==null){
-                    lines=new LineRenderer[numOfLines];
+                    lines=new Line[numOfLines];
                     for(int i=0;i<numOfLines;++i){
-                        lines[i] = Instantiate(linePrefab, lineParent).GetComponent<LineRenderer>();
+                        lines[i] = Instantiate(linePrefab, lineParent).GetComponent<Line>();
                     }
                     break;
                 }
             }
         }
         if(lines==null){
-            lines=new LineRenderer[numOfLines];
+            lines=new Line[numOfLines];
             for(int i=0;i<numOfLines;++i){
-                lines[i] = Instantiate(linePrefab, lineParent).GetComponent<LineRenderer>();
+                lines[i] = Instantiate(linePrefab, lineParent).GetComponent<Line>();
             }
         } else if(lines.Length<numOfLines){
-            LineRenderer[] oldLines=lines;
-            lines=new LineRenderer[numOfLines];
+            Line[] oldLines=lines;
+            lines=new Line[numOfLines];
             Array.Copy(oldLines, lines, oldLines.Length);
             for(int i=oldLines.Length;i<lines.Length;++i){
-                lines[i] = Instantiate(linePrefab, lineParent).GetComponent<LineRenderer>();
+                lines[i] = Instantiate(linePrefab, lineParent).GetComponent<Line>();
             }
         } else if(lines.Length>numOfLines){
-            LineRenderer[] oldLines=lines;
-            lines=new LineRenderer[numOfLines];
+            Line[] oldLines=lines;
+            lines=new Line[numOfLines];
             Array.Copy(oldLines, lines, lines.Length);
             for(int i=lines.Length;i<oldLines.Length;++i){
                 if(oldLines[i]!=null){
@@ -71,9 +71,9 @@ public class CircleGen : MonoBehaviour
             }
         }
         for(int i=0;i<numOfLines;++i){
-            lines[i].positionCount=numOfPoints;
+            lines[i].lineRenderer.positionCount=numOfPoints;
             float width=lineWidth_v*lineWidthEase.Evaluate((i+1f)/numOfLines);
-            lines[i].widthCurve=AnimationCurve.Linear(0,width,1,width);
+            lines[i].lineRenderer.widthCurve=AnimationCurve.Linear(0,width,1,width);
         }
     }
     void UpdateCircles(){
@@ -85,7 +85,8 @@ public class CircleGen : MonoBehaviour
     }
     void DrawEllipsePolar(int lineIdx, float scale, float distortionDamp)
     {
-        LineRenderer line=lines[lineIdx];
+        LineRenderer line=lines[lineIdx].lineRenderer;
+        lines[lineIdx].Alpha=scale;
 
         float a_unscaled=transform.localScale.x;
         float a = Mathf.Lerp(transform.localScale.x,1,distortionDamp)*scale; // 长半轴
