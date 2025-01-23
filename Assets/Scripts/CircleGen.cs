@@ -77,7 +77,7 @@ public class CircleGen : MonoBehaviour
         }
     }
     void UpdateCircles(){
-        centerDist=((Vector2)(bubble.player.position-bubble.transform.position)).magnitude;
+        centerDist=((Vector2)(bubble.center.position-bubble.transform.position)).magnitude;
         //0-numOfLines: inside to outside
         for(int i=0;i<numOfLines;++i){
             DrawEllipsePolar(i, (i+1f)/numOfLines, 1-((i+1f)/numOfLines));
@@ -102,8 +102,8 @@ public class CircleGen : MonoBehaviour
             float r = Mathf.Sqrt( aabb / (bb * cos*cos + aa * sin*sin));
             float xpos = r * cos;
             float ypos = r * sin;
-            xpos+=(a-a_unscaled)*Mathf.Clamp01(centerDist/bubble.radius);
-            Vector2 pos=MathUtil.Rotate(new Vector2(xpos,ypos)*bubble.radius, transform.eulerAngles.z*Mathf.Deg2Rad);
+            xpos+=(a-a_unscaled)*Mathf.Clamp01(centerDist/bubble.actualRadius);
+            Vector2 pos=MathUtil.Rotate(new Vector2(xpos,ypos)*bubble.actualRadius, transform.eulerAngles.z*Mathf.Deg2Rad);
             line.SetPosition(i, transform.position+(Vector3)pos);
         }
     }

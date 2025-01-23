@@ -5,11 +5,13 @@ using DG.Tweening;
 
 public class Bubble : MonoBehaviour
 {
-    public Transform player;
-    public float radius, radius1, radius2;
-    public float spd;
+    public Transform center;
+    public Player player; //normally, when the player is inside the bubble, 'player' is the child of 'center'
+    public float radius0, radius, radius1, radius2;
+    public float spd, shootSpd;
     [Header("Animation")]
     public float animDuration;
+    public float shrinkDuration;
     [Header("Components")]
     public Rigidbody2D rgb;
 
@@ -19,6 +21,9 @@ public class Bubble : MonoBehaviour
     Vector2 mouseWorldPos;
     Vector2 shootDir, shootOrigin;
     float shootDist;
+    [HideInInspector] public bool insideBubble;
+    public float actualRadius;
+    Sequence shootSyncPosSequence;
 
     public float ShootDist{
         get=>shootDist;
@@ -29,6 +34,11 @@ public class Bubble : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, radius1);
         Gizmos.color=Color.red;
         Gizmos.DrawWireSphere(transform.position, radius2);
+        Gizmos.color=Color.black;
+        Gizmos.DrawWireSphere(transform.position, radius0);
+    }
+    void OnValidate(){
+        actualRadius=radius;
     }
     void Awake(){
         inst=this;
@@ -37,6 +47,7 @@ public class Bubble : MonoBehaviour
     void Start()
     {
         mainCam=Camera.main;
+        actualRadius=radius;
     }
     Vector2 MouseWorldPos(){
         return mainCam.ScreenToWorldPoint(Input.mousePosition);
@@ -66,28 +77,48 @@ public class Bubble : MonoBehaviour
         float distSqr=dir.x*dir.x+dir.y*dir.y;
         return distSqr<=r*r;
     }
+    public void Shrink(){
+        DOTween.To(()=>actualRadius, value=>actualRadius=value, radius0, shrinkDuration).SetEase(Ease.OutQuint);
+    }
+    public void Expand(){
+        DOTween.To(()=>actualRadius, value=>actualRadius=value, radius, shrinkDuration).SetEase(Ease.InOutBack);
+    }
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButtonDown(0)&&MouseInsideRadius(radius)){
-            mouseDown=true;
-        } else if(Input.GetMouseButtonUp(0)&&mouseDown){
-            mouseDown=false;
-            //animation
-            transform.DOScaleX(1, animDuration).SetEase(Ease.OutCirc);
-            if(shootDist>radius)
-                transform.DOLocalMove(Vector3.zero, animDuration);
-            player.DOLocalMove(Vector3.zero, animDuration).SetEase(Ease.OutCirc);
-            //movement
-            if(IsInsideRadius(radius1, transform.parent.position, mouseWorldPos)){ //move
-                rgb.velocity=shootDir*(spd*shootDist/radius);
-            } else{ //get out from the bubble
+        if(Input.GetKeyDown(KeyCode.E))
+            player.OnReturnToBubble();
+        if(insideBubble){
+            if(Input.GetMouseButtonDown(0)&&MouseInsideRadius(radius)){
+                mouseDown=true;
+                if(shootSyncPosSequence!=null && shootSyncPosSequence.IsPlaying())
+                    shootSyncPosSequence.Kill();
+            } else if(Input.GetMouseButtonUp(0)&&mouseDown){
+                mouseDown=false;
+                //moves with bubble (player stays in the bubble)
+                if(IsInsideRadius(radius1, transform.parent.position, mouseWorldPos)){ //move
+                    //animation
+                    if(shootSyncPosSequence!=null && shootSyncPosSequence.IsPlaying())
+                        shootSyncPosSequence.Kill();
+                    shootSyncPosSequence=DOTween.Sequence();
+                    shootSyncPosSequence.Append(transform.DOScaleX(1, animDuration).SetEase(Ease.OutCirc));
+                    if(shootDist>radius)
+                        shootSyncPosSequence.Join(transform.DOLocalMove(Vector3.zero, animDuration));
+                    shootSyncPosSequence.Join(center.DOLocalMove(Vector3.zero, animDuration).SetEase(Ease.OutCirc));
+                    //movement
+                    rgb.velocity=shootDir*(spd*shootDist/radius);
+                } else{ //get out from the bubble
+                    //animation
+                    transform.DOScaleX(1, animDuration).SetEase(Ease.OutElastic);
+                    if(shootDist>radius)
+                        transform.DOLocalMove(Vector3.zero, animDuration);
+                    center.localPosition=Vector3.zero;
+                    //movement
+                    rgb.velocity=Vector2.zero;
+                    player.OnShot(shootDir*(shootSpd*shootDist/radius));
+                }
             }
         }
-        if(Input.GetKeyDown(KeyCode.A))
-            rgb.velocity=Vector2.left*spd;
-        else if(Input.GetKeyDown(KeyCode.W))
-            rgb.velocity=Vector2.up*spd;
     }
     void FixedUpdate(){
         if(mouseDown){
@@ -120,7 +151,7 @@ public class Bubble : MonoBehaviour
                 scale.x=(shootDist+radius)/2/radius;
                 transform.localScale=scale;
             }
-            player.transform.position=mouseWorldPos;
+            center.transform.position=mouseWorldPos;
             lastFrameInsideRadius=insideRadius;
         }
     }
