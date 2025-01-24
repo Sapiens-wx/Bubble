@@ -15,6 +15,7 @@ public class CircleGen : MonoBehaviour
     public float lineWidth_v;
     public AnimationCurve lineWidthEase;
 
+    public static CircleGen inst;
     [HideInInspector] [SerializeField] Line[] lines;
     float centerDist;
     void OnValidate(){
@@ -23,6 +24,9 @@ public class CircleGen : MonoBehaviour
     }
     void Start(){
         InitLineRenderers();
+    }
+    void Awake(){
+        inst=this;
     }
     [ContextMenu("re init")]
     void InitCompletely(){

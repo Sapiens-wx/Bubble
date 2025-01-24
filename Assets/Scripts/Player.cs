@@ -6,6 +6,7 @@ using DG.Tweening;
 public class Player : MonoBehaviour
 {
     public Rigidbody2D rgb;
+    public CircleCollider2D cc;
     public float spd;
     public float radius, radius1;
 
@@ -23,6 +24,7 @@ public class Player : MonoBehaviour
         mainCam=Camera.main;
         rgb.simulated=false;
         Bubble.inst.insideBubble=true;
+        cc.enabled=false;
     }
     void Update(){
         //sync player position with the bubble
@@ -71,6 +73,8 @@ public class Player : MonoBehaviour
         rgb.simulated=true;
         rgb.velocity=shootForce;
         Bubble.inst.Shrink();
+        //enable circle collider: didn't implement here. has to delay the enable after the player passes the center of the bubble. implemented in Bubble.cs: Update().
+        cc.enabled=true;
     }
     public void OnReturnToBubble(){
         if(Bubble.inst.insideBubble) return;
@@ -81,6 +85,8 @@ public class Player : MonoBehaviour
         s.AppendCallback(()=>{
             Bubble.inst.Expand();
             Bubble.inst.insideBubble=true;
+            //disable circle collider
+            cc.enabled=false;
         });
     }
     //-------------------mouse input utility--------------------
