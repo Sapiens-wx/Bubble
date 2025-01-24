@@ -14,6 +14,8 @@ public class Bubble : MonoBehaviour
     public float shrinkDuration;
     [Header("Components")]
     public Rigidbody2D rgb;
+    public CircleCollider2D circleCollider;
+    public LayerMask wallLayer;
 
     public static Bubble inst;
     Camera mainCam;
@@ -29,6 +31,13 @@ public class Bubble : MonoBehaviour
     public float ShootDist{
         get=>shootDist;
     }
+    public float ActualRadius{
+        get=>actualRadius;
+        set{
+            actualRadius=value;
+            circleCollider.radius=actualRadius;
+        }
+    }
     void OnDrawGizmosSelected(){
         Gizmos.DrawWireSphere(transform.position, radius);
         Gizmos.color=Color.green;
@@ -39,7 +48,7 @@ public class Bubble : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, radius0);
     }
     void OnValidate(){
-        actualRadius=radius;
+        ActualRadius=radius;
     }
     void Awake(){
         inst=this;
@@ -48,7 +57,7 @@ public class Bubble : MonoBehaviour
     void Start()
     {
         mainCam=Camera.main;
-        actualRadius=radius;
+        ActualRadius=radius;
     }
     Vector2 MouseWorldPos(){
         return mainCam.ScreenToWorldPoint(Input.mousePosition);
@@ -79,10 +88,10 @@ public class Bubble : MonoBehaviour
         return distSqr<=r*r;
     }
     public void Shrink(){
-        DOTween.To(()=>actualRadius, value=>actualRadius=value, radius0, shrinkDuration).SetEase(Ease.OutQuint);
+        DOTween.To(()=>actualRadius, value=>ActualRadius=value, radius0, shrinkDuration).SetEase(Ease.OutQuint);
     }
     public void Expand(){
-        DOTween.To(()=>actualRadius, value=>actualRadius=value, radius, shrinkDuration).SetEase(Ease.InOutBack);
+        DOTween.To(()=>actualRadius, value=>ActualRadius=value, radius, shrinkDuration).SetEase(Ease.InOutBack);
     }
     // Update is called once per frame
     void Update()
@@ -110,15 +119,22 @@ public class Bubble : MonoBehaviour
                     rgb.velocity=shootDir*(spd*shootDist/radius);
                 } else{ //get out from the bubble
                     //animation
-                    transform.DOScaleX(1, animDuration).SetEase(Ease.OutElastic);
+                    Sequence sequence=DOTween.Sequence();
+                    sequence.Append(transform.DOScaleX(1, animDuration).SetEase(Ease.OutElastic));
                     if(shootDist>radius)
-                        transform.DOLocalMove(Vector3.zero, animDuration);
+                        sequence.Join(transform.DOLocalMove(Vector3.zero, animDuration));
                     center.localPosition=Vector3.zero;
                     //stop fully charged effect
                     FullyChargedEffect.inst.Stop();
                     //movement
                     rgb.velocity=Vector2.zero;
                     player.OnShot(shootDir*(shootSpd*shootDist/radius));
+                    //disable collider
+                    circleCollider.enabled=false;
+                    //enable collider after the animation
+                    sequence.AppendCallback(()=>{
+                        circleCollider.enabled=true;
+                    });
                 }
             }
         }
@@ -146,6 +162,15 @@ public class Bubble : MonoBehaviour
                 shootDist=shootDir.magnitude;
                 shootDir/=shootDist;
             }
+            //if(!insideRadius){ //avoid colliding with walls
+                float maxDistToWall=MaxDistToReachWall();
+                Debug.Log($"shootDist={shootDist}, maxDistToWall={maxDistToWall}");
+                if(maxDistToWall<shootDist){
+                    mouseWorldPos=shootOrigin-shootDir*maxDistToWall;
+                    shootDist=(shootOrigin-mouseWorldPos).magnitude;
+                }
+                //Debug.Log("collide with wall: "+(maxDistToWall<shootDist).ToString());
+            //}
             //detect if shootDist<radius1 or not and get the moment when shootDist changes from <radius1 to >=radius1 and vice versa
             //the moment when shootDist changes from >=radius1 to <radius1
             if(shootDist<radius1&&lastFrameShootDist>=radius1){ //stop the animation
@@ -165,5 +190,43 @@ public class Bubble : MonoBehaviour
             lastFrameInsideRadius=insideRadius;
             lastFrameShootDist=shootDist;
         }
+    }
+    float MaxDistToReachWall(){
+        Vector2 origin = transform.position;
+        Vector2 right=new Vector2(shootDir.y, -shootDir.x);
+
+        //RaycastHit2D _hit=Physics2D.Linecast(origin, mouseWorldPos, wallLayer);
+        //return _hit?_hit.distance:float.MaxValue;
+
+        float a,b;
+        GetEllipseAB(out a, out b);
+        float minDist=float.MaxValue;
+        int steps=4;
+        for(int i=0;i<steps;++i){
+            float y=(float)i/steps*radius;
+            float xSquared = a * a * (1 - (y * y) / (b * b));
+            float x = Mathf.Sqrt(xSquared);
+            Vector2 origin_right = origin+right*y;
+            RaycastHit2D hit=Physics2D.Linecast(origin_right, origin_right-shootDir*x, wallLayer);
+            Debug.DrawLine(origin_right,origin_right-shootDir*x, Color.white);
+            if(hit){
+                float a_new=CalculateA(hit.distance,y,b);
+                if(a_new<minDist)
+                    minDist=a_new;
+            }
+        }
+        return minDist*2-radius;
+    }
+    public void GetEllipseAB(out float a, out float b){
+        a = (shootDist+radius)/2;
+        b = radius;
+    }
+    static float CalculateA(float x, float y, float b)
+    {
+        float denominator = 1 - (y * y) / (b * b);
+
+        float aSquared = (x * x) / denominator;
+
+        return Mathf.Sqrt(aSquared);
     }
 }
