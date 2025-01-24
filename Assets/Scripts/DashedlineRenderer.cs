@@ -4,83 +4,52 @@ using UnityEngine;
 
 public class DashedlineRenderer : MonoBehaviour
 {
-    
-    public LineRenderer lineRenderer;
-    public float dashLength = 0.1f;
-    public float gapLength = 0.1f;
+    public Vector3 startPoint; 
+    public Vector3 endPoint;   
+    public float dashLength = 0.2f; 
+    public float dashGap = 0.1f;    
+    public float lineWidth = 0.05f; 
+    public GameObject dashPrefab;   
+
+    private GameObject[] dashes;
 
     private void Start()
     {
-        DrawDashedLine();
+        GenerateDashedLine();
     }
 
-    private void DrawDashedLine()
+    private void GenerateDashedLine()
     {
-        Vector3[] positions = new Vector3[2];
-        positions[0] = transform.position;
-        positions[1] = transform.position + transform.forward * 10f;
+        float distance = Vector3.Distance(startPoint, endPoint); 
+        Vector3 direction = (endPoint - startPoint).normalized; 
+        int dashCount = Mathf.FloorToInt(distance / (dashLength + dashGap)); 
 
-        lineRenderer.positionCount = positions.Length;
-        lineRenderer.SetPositions(positions);
+        dashes = new GameObject[dashCount]; 
 
-        float totalLength = Vector3.Distance(positions[0], positions[1]);
-        float currentLength = 0f;
-        bool isDash = true;
-        int pointIndex = 0;
-
-        while (currentLength < totalLength)
+        for (int i = 0; i < dashCount; i++)
         {
-            if (isDash)
-            {
-                float dashEndLength = Mathf.Min(currentLength + dashLength, totalLength);
-                Vector3 dashEndPoint = positions[0] + (positions[1] - positions[0]).normalized * dashEndLength;
-                lineRenderer.positionCount = pointIndex + 2;
-                lineRenderer.SetPosition(pointIndex, positions[0] + (positions[1] - positions[0]).normalized * currentLength);
-                lineRenderer.SetPosition(pointIndex + 1, dashEndPoint);
-                pointIndex += 2;
-                currentLength = dashEndLength;
-            }
-            else
-            {
-                currentLength += gapLength;
-            }
-            isDash = !isDash;
+            Vector3 dashStart = startPoint + direction * i * (dashLength + dashGap);
+            Vector3 dashEnd = dashStart + direction * dashLength;
+            
+            GameObject dash = Instantiate(dashPrefab, transform);
+            dash.transform.position = (dashStart + dashEnd) / 2; 
+            dash.transform.localScale = new Vector3(dashLength, lineWidth, 1); 
+            dash.transform.rotation = Quaternion.LookRotation(Vector3.forward, direction); 
+            
+            DashSegment segment = dash.AddComponent<DashSegment>();
+            segment.Initialize(i, this);
+            segment.breakEffectPrefab = dashPrefab;
+            
+            dashes[i] = dash; 
         }
     }
-
-    private void OnCollisionEnter(Collision collision)
+    
+    public void BreakDash(int index)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (index >= 0 && index < dashes.Length && dashes[index] != null)
         {
-            // Calculate the position of the collision point on the line segment
-            Vector3 collisionPoint = collision.contacts[0].point;
-            Vector3 startPoint = lineRenderer.GetPosition(0);
-            Vector3 endPoint = lineRenderer.GetPosition(lineRenderer.positionCount - 1);
-            Vector3 direction = (endPoint - startPoint).normalized;
-            float distanceToStart = Vector3.Dot(collisionPoint - startPoint, direction);
-
-            // Split line segment
-            int newPositionCount = lineRenderer.positionCount * 2;
-            Vector3[] newPositions = new Vector3[newPositionCount];
-            int leftIndex = 0;
-            int rightIndex = lineRenderer.positionCount;
-
-            for (int i = 0; i < lineRenderer.positionCount; i++)
-            {
-                Vector3 position = lineRenderer.GetPosition(i);
-                float distance = Vector3.Dot(position - startPoint, direction);
-                if (distance < distanceToStart)
-                {
-                    newPositions[leftIndex++] = position;
-                }
-                else
-                {
-                    newPositions[rightIndex++] = position;
-                }
-            }
-
-            lineRenderer.positionCount = newPositionCount;
-            lineRenderer.SetPositions(newPositions);
+            Destroy(dashes[index]); 
+            dashes[index] = null;
         }
     }
 }
