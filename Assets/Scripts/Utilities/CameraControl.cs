@@ -5,13 +5,27 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
+    [Header("Event Monitor")]
+    public VoidEventSO afterSceneLoadedEvent;
+    
     public CinemachineConfiner2D confiner2D;
 
     private void Awake()
     {
         confiner2D = GetComponent<CinemachineConfiner2D>();
     }
-    void Start()
+
+    private void OnEnable()
+    {
+        afterSceneLoadedEvent.OnEventRaised += OnAfterSceneLoadedEvent;
+    }
+
+    private void OnDisable()
+    {
+        afterSceneLoadedEvent.OnEventRaised -= OnAfterSceneLoadedEvent;
+    }
+
+    private void OnAfterSceneLoadedEvent()
     {
         GetNewCameraBounds();
     }

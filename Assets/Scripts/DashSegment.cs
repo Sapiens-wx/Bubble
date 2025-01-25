@@ -16,11 +16,13 @@ public class DashSegment : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.name);
         if (other.CompareTag("Player")) 
         {
             Debug.Log(other.name);
             if (breakEffectPrefab != null)
             {
+                Debug.Log("Effect");
                 Instantiate(breakEffectPrefab, transform.position, Quaternion.identity);
             }
             

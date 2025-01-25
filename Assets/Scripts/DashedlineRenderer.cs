@@ -10,7 +10,8 @@ public class DashedlineRenderer : MonoBehaviour
     public float dashGap = 0.1f;    
     public float lineWidth = 0.05f; 
     public GameObject dashPrefab;   
-
+    public GameObject breakEffectPrefab;
+    
     private GameObject[] dashes;
 
     private void Start()
@@ -38,7 +39,7 @@ public class DashedlineRenderer : MonoBehaviour
             
             DashSegment segment = dash.AddComponent<DashSegment>();
             segment.Initialize(i, this);
-            segment.breakEffectPrefab = dashPrefab;
+            segment.breakEffectPrefab = breakEffectPrefab;
             
             dashes[i] = dash; 
         }
@@ -46,6 +47,7 @@ public class DashedlineRenderer : MonoBehaviour
     
     public void BreakDash(int index)
     {
+        Debug.Log(index);
         if (index >= 0 && index < dashes.Length && dashes[index] != null)
         {
             Destroy(dashes[index]); 
