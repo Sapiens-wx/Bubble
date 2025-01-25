@@ -222,6 +222,7 @@ public class Bubble : MonoBehaviour
         if(dieSeq!=null && dieSeq.IsActive() && dieSeq.IsPlaying()) return;
         dieSeq=DOTween.Sequence();
         dieSeq.Append(DOTween.To(()=>actualRadius, (value)=>ActualRadius=value, 0, shrinkDuration).SetEase(Ease.InBack));
+        dieSeq.Join(player.transform.DOScale(Vector3.zero, shrinkDuration).SetEase(Ease.InBack));
         dieSeq.AppendCallback(()=>Revive(Vector2.zero));
     }
     void Revive(Vector2 pos){
@@ -232,6 +233,7 @@ public class Bubble : MonoBehaviour
         center.transform.localPosition=Vector3.zero;
         FullyChargedEffect.inst.Stop();
         player.Start(); //reset player
+        player.transform.localScale=Vector3.one;
         ActualRadius=radius;
         mouseDown=false;
         //reset animator
