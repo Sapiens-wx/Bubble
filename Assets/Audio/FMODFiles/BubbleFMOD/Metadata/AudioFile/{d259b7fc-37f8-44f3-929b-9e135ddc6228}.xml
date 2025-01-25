@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{d259b7fc-37f8-44f3-929b-9e135ddc6228}">
+		<property name="assetPath">
+			<value>OST_OutOfBubble_Bass.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>96</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{cb00d35c-640b-4485-88d4-fe69a00623f5}</destination>
+		</relationship>
+	</object>
+</objects>

@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     public Rigidbody2D rgb;
     public CircleCollider2D cc;
+    public Animator animator;
     public float spd;
     public float radius, radius1;
 
@@ -31,14 +32,17 @@ public class Player : MonoBehaviour
         //sync player position with the bubble
         if(Bubble.inst.insideBubble){
             transform.position=Bubble.inst.center.position;
+            transform.rotation=Bubble.inst.center.rotation;
         }
         //interaction
         if(!Bubble.inst.insideBubble){
             if(Input.GetMouseButtonDown(0)&&MouseInsideRadius(radius)){
+                animator.SetTrigger("charge");
                 mouseDown=true;
             } else if(Input.GetMouseButtonUp(0)&&mouseDown){
                 mouseDown=false;
                 //animation
+                animator.SetTrigger("sprint");
                 //movement
                 rgb.velocity=shootDir*(spd*shootDist/radius);
             }
@@ -67,6 +71,14 @@ public class Player : MonoBehaviour
             //adjust rotation
             transform.eulerAngles=new Vector3(0,0,Vector2.SignedAngle(Vector2.right, shootDir));
             lastFrameInsideRadius=insideRadius;
+        }
+    }
+    void OnCollisionEnter2D(Collision2D collision){
+        //collides with wall
+        if(GameManager.IsLayer(GameManager.inst.wallLayer, collision.collider.gameObject.layer)){
+            if(collision.collider.CompareTag("WallRed")){
+                Bubble.inst.Die();
+            }
         }
     }
     public void OnShot(Vector2 shootForce){

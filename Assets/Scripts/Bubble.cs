@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Cinemachine;
 
 public class Bubble : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class Bubble : MonoBehaviour
     [Header("Components")]
     public Rigidbody2D rgb;
     public CircleCollider2D circleCollider;
+    public CinemachineTargetGroup cinemachineTargetGroup;
     public LayerMask wallLayer;
 
     public static Bubble inst;
@@ -26,7 +28,7 @@ public class Bubble : MonoBehaviour
     float shootDist;
     [HideInInspector] public bool insideBubble;
     public float actualRadius;
-    Sequence shootSyncPosSequence;
+    Sequence shootSyncPosSequence, dieSeq;
 
     public float ShootDist{
         get=>shootDist;
@@ -100,9 +102,13 @@ public class Bubble : MonoBehaviour
             player.OnReturnToBubble();
         if(insideBubble){
             if(Input.GetMouseButtonDown(0)&&MouseInsideRadius(radius)){
+                cinemachineTargetGroup.m_Targets[0].weight=0;
                 mouseDown=true;
-                if(shootSyncPosSequence!=null && shootSyncPosSequence.IsPlaying())
+                if(shootSyncPosSequence!=null && shootSyncPosSequence.IsPlaying()){
                     shootSyncPosSequence.Kill();
+                    shootSyncPosSequence=null;
+                }
+                player.animator.SetTrigger("charge");
             } else if(Input.GetMouseButtonUp(0)&&mouseDown){
                 Shoot();
             }
@@ -157,12 +163,16 @@ public class Bubble : MonoBehaviour
         }
     }
     void Shoot(){
+        cinemachineTargetGroup.m_Targets[0].weight=1;
         mouseDown=false;
         //moves with bubble (player stays in the bubble)
         if(IsInsideRadius(radius1, transform.parent.position, mouseWorldPos)){ //move
             //animation
-            if(shootSyncPosSequence!=null && shootSyncPosSequence.IsPlaying())
+            player.animator.SetTrigger("idle");
+            if(shootSyncPosSequence!=null && shootSyncPosSequence.IsPlaying()){
                 shootSyncPosSequence.Kill();
+                shootSyncPosSequence=null;
+            }
             shootSyncPosSequence=DOTween.Sequence();
             shootSyncPosSequence.Append(transform.DOScaleX(1, animDuration).SetEase(Ease.OutCirc));
             if(shootDist>radius)
@@ -172,6 +182,7 @@ public class Bubble : MonoBehaviour
             rgb.velocity=shootDir*(spd*shootDist/radius);
         } else{ //get out from the bubble
             //animation
+            player.animator.SetTrigger("sprint");
             Sequence sequence=DOTween.Sequence();
             sequence.Append(transform.DOScaleX(1, animDuration).SetEase(Ease.OutElastic));
             if(shootDist>radius)
@@ -190,10 +201,11 @@ public class Bubble : MonoBehaviour
             });
         }
     }
-    void Die(){
-        Sequence s=DOTween.Sequence();
-        s.Append(DOTween.To(()=>actualRadius, (value)=>ActualRadius=value, 0, shrinkDuration).SetEase(Ease.InBack));
-        s.AppendCallback(()=>Revive(Vector2.zero));
+    public void Die(){
+        if(dieSeq!=null && dieSeq.IsActive() && dieSeq.IsPlaying()) return;
+        dieSeq=DOTween.Sequence();
+        dieSeq.Append(DOTween.To(()=>actualRadius, (value)=>ActualRadius=value, 0, shrinkDuration).SetEase(Ease.InBack));
+        dieSeq.AppendCallback(()=>Revive(Vector2.zero));
     }
     void Revive(Vector2 pos){
         rgb.velocity=Vector2.zero;
@@ -205,6 +217,12 @@ public class Bubble : MonoBehaviour
         player.Start(); //reset player
         ActualRadius=radius;
         mouseDown=false;
+        //reset animator
+        if(!player.animator.GetCurrentAnimatorStateInfo(0).IsTag("idle")){
+            player.animator.SetTrigger("idle");
+            player.animator.ResetTrigger("charge");
+            player.animator.ResetTrigger("sprint");
+        }
     }
     bool CollidesWithWall(){
         RaycastHit2D hit = new RaycastHit2D();
