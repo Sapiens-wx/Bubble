@@ -1,7 +1,12 @@
 # This .gitignore file should be placed at the root of your Unity project directory
+
+#fmod
 Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset
 Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset.meta
 fmod_editor.log
+Assets/Audio/FMODFiles/BubbleFMOD/Metadata/Event/{7a7e8a86-639e-444f-af8d-dea4deec36d3}.xml.meta
+Assets/Audio/FMODFiles/BubbleFMOD/Metadata/Event/{e6ddeb44-9d21-4770-baf8-76a3add1b838}.xml.meta
+
 .vscode/
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
