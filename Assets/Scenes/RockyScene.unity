@@ -134,7 +134,8 @@ GameObject:
   - component: {fileID: 121142131}
   - component: {fileID: 121142133}
   - component: {fileID: 121142134}
-  m_Layer: 0
+  - component: {fileID: 121142135}
+  m_Layer: 3
   m_Name: Circle_Physics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -271,6 +272,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2.25
+--- !u!114 &121142135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121142130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 430d23a99c03e8644ba09556abd322fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &140159548
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,7 +532,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.16285715
+        value: 0.08571429
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -528,7 +541,7 @@ LineRenderer:
         outWeight: 0
       - serializedVersion: 3
         time: 1
-        value: 0.16285715
+        value: 0.08571429
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -653,7 +666,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.2509804, g: 0.2509804, b: 0.2509804, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -957,7 +970,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.13571429
+        value: 0.071428575
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -966,7 +979,7 @@ LineRenderer:
         outWeight: 0
       - serializedVersion: 3
         time: 1
-        value: 0.13571429
+        value: 0.071428575
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1525,7 +1538,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.08142857
+        value: 0.042857144
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -1534,7 +1547,7 @@ LineRenderer:
         outWeight: 0
       - serializedVersion: 3
         time: 1
-        value: 0.08142857
+        value: 0.042857144
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -2064,7 +2077,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.10857143
+        value: 0.05714286
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -2073,7 +2086,7 @@ LineRenderer:
         outWeight: 0
       - serializedVersion: 3
         time: 1
-        value: 0.10857143
+        value: 0.05714286
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -2502,7 +2515,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.19
+        value: 0.1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -2511,7 +2524,7 @@ LineRenderer:
         outWeight: 0
       - serializedVersion: 3
         time: 1
-        value: 0.19
+        value: 0.1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -2562,6 +2575,53 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 1
   m_ApplyActiveColorSpace: 1
+--- !u!1 &1665572073
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1665572075}
+  - component: {fileID: 1665572074}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1665572074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665572073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f23f9b51ab32955468f138b155a36b9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallLayer:
+    serializedVersion: 2
+    m_Bits: 16
+--- !u!4 &1665572075
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665572073}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1810597363
 GameObject:
   m_ObjectHideFlags: 0
@@ -2695,7 +2755,7 @@ MonoBehaviour:
   lineParent: {fileID: 260015505}
   numOfPoints: 150
   numOfLines: 7
-  lineWidth_v: 0.19
+  lineWidth_v: 0.1
   lineWidthEase:
     serializedVersion: 2
     m_Curve:
@@ -3143,7 +3203,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.054285716
+        value: 0.02857143
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -3152,7 +3212,7 @@ LineRenderer:
         outWeight: 0
       - serializedVersion: 3
         time: 1
-        value: 0.054285716
+        value: 0.02857143
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -3451,7 +3511,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.027142858
+        value: 0.014285715
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -3460,7 +3520,7 @@ LineRenderer:
         outWeight: 0
       - serializedVersion: 3
         time: 1
-        value: 0.027142858
+        value: 0.014285715
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -3554,3 +3614,4 @@ SceneRoots:
   - {fileID: 622277306}
   - {fileID: 1298100678}
   - {fileID: 1087041156}
+  - {fileID: 1665572075}

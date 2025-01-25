@@ -15,12 +15,13 @@ public class Player : MonoBehaviour
     Vector2 mouseWorldPos;
     Vector2 shootDir, shootOrigin;
     float shootDist;
+    Sequence returnToBubbleSeq;
     void OnDrawGizmosSelected(){
         Gizmos.DrawWireSphere(transform.position, radius);
         Gizmos.color=Color.green;
         Gizmos.DrawWireSphere(transform.position, radius1);
     }
-    void Start(){
+    public void Start(){
         mainCam=Camera.main;
         rgb.simulated=false;
         Bubble.inst.insideBubble=true;
@@ -80,14 +81,24 @@ public class Player : MonoBehaviour
         if(Bubble.inst.insideBubble) return;
         rgb.velocity=Vector2.zero;
         rgb.simulated=false;
-        Sequence s=DOTween.Sequence();
-        s.Append(Bubble.inst.rgb.DOMove(transform.position, 1));
-        s.AppendCallback(()=>{
+        returnToBubbleSeq=DOTween.Sequence();
+        returnToBubbleSeq.Append(Bubble.inst.rgb.DOMove(transform.position, 1));
+        returnToBubbleSeq.AppendCallback(()=>{
             Bubble.inst.Expand();
             Bubble.inst.insideBubble=true;
             //disable circle collider
             cc.enabled=false;
         });
+    }
+    public void OnReturnToBubbleInterrupted(){
+        if(Bubble.inst.insideBubble) return;
+        if(returnToBubbleSeq==null || !returnToBubbleSeq.IsPlaying()) return;
+        returnToBubbleSeq.Pause();
+
+        Bubble.inst.insideBubble=false;
+        rgb.simulated=true;
+        //enable circle collider: didn't implement here. has to delay the enable after the player passes the center of the bubble. implemented in Bubble.cs: Update().
+        cc.enabled=true;
     }
     //-------------------mouse input utility--------------------
     Vector2 MouseWorldPos(){
