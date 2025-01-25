@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     public Rigidbody2D rgb;
     public CircleCollider2D cc;
+    public Animator animator;
     public float spd;
     public float radius, radius1;
 
@@ -31,14 +32,17 @@ public class Player : MonoBehaviour
         //sync player position with the bubble
         if(Bubble.inst.insideBubble){
             transform.position=Bubble.inst.center.position;
+            transform.rotation=Bubble.inst.center.rotation;
         }
         //interaction
         if(!Bubble.inst.insideBubble){
             if(Input.GetMouseButtonDown(0)&&MouseInsideRadius(radius)){
+                animator.SetTrigger("charge");
                 mouseDown=true;
             } else if(Input.GetMouseButtonUp(0)&&mouseDown){
                 mouseDown=false;
                 //animation
+                animator.SetTrigger("sprint");
                 //movement
                 rgb.velocity=shootDir*(spd*shootDist/radius);
             }

@@ -108,6 +108,7 @@ public class Bubble : MonoBehaviour
                     shootSyncPosSequence.Kill();
                     shootSyncPosSequence=null;
                 }
+                player.animator.SetTrigger("charge");
             } else if(Input.GetMouseButtonUp(0)&&mouseDown){
                 Shoot();
             }
@@ -167,6 +168,7 @@ public class Bubble : MonoBehaviour
         //moves with bubble (player stays in the bubble)
         if(IsInsideRadius(radius1, transform.parent.position, mouseWorldPos)){ //move
             //animation
+            player.animator.SetTrigger("idle");
             if(shootSyncPosSequence!=null && shootSyncPosSequence.IsPlaying()){
                 shootSyncPosSequence.Kill();
                 shootSyncPosSequence=null;
@@ -180,6 +182,7 @@ public class Bubble : MonoBehaviour
             rgb.velocity=shootDir*(spd*shootDist/radius);
         } else{ //get out from the bubble
             //animation
+            player.animator.SetTrigger("sprint");
             Sequence sequence=DOTween.Sequence();
             sequence.Append(transform.DOScaleX(1, animDuration).SetEase(Ease.OutElastic));
             if(shootDist>radius)
@@ -214,6 +217,12 @@ public class Bubble : MonoBehaviour
         player.Start(); //reset player
         ActualRadius=radius;
         mouseDown=false;
+        //reset animator
+        if(!player.animator.GetCurrentAnimatorStateInfo(0).IsTag("idle")){
+            player.animator.SetTrigger("idle");
+            player.animator.ResetTrigger("charge");
+            player.animator.ResetTrigger("sprint");
+        }
     }
     bool CollidesWithWall(){
         RaycastHit2D hit = new RaycastHit2D();
