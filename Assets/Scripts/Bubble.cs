@@ -26,7 +26,7 @@ public class Bubble : MonoBehaviour
     float shootDist;
     [HideInInspector] public bool insideBubble;
     public float actualRadius;
-    Sequence shootSyncPosSequence;
+    Sequence shootSyncPosSequence, dieSeq;
 
     public float ShootDist{
         get=>shootDist;
@@ -101,8 +101,10 @@ public class Bubble : MonoBehaviour
         if(insideBubble){
             if(Input.GetMouseButtonDown(0)&&MouseInsideRadius(radius)){
                 mouseDown=true;
-                if(shootSyncPosSequence!=null && shootSyncPosSequence.IsPlaying())
+                if(shootSyncPosSequence!=null && shootSyncPosSequence.IsPlaying()){
                     shootSyncPosSequence.Kill();
+                    shootSyncPosSequence=null;
+                }
             } else if(Input.GetMouseButtonUp(0)&&mouseDown){
                 Shoot();
             }
@@ -161,8 +163,10 @@ public class Bubble : MonoBehaviour
         //moves with bubble (player stays in the bubble)
         if(IsInsideRadius(radius1, transform.parent.position, mouseWorldPos)){ //move
             //animation
-            if(shootSyncPosSequence!=null && shootSyncPosSequence.IsPlaying())
+            if(shootSyncPosSequence!=null && shootSyncPosSequence.IsPlaying()){
                 shootSyncPosSequence.Kill();
+                shootSyncPosSequence=null;
+            }
             shootSyncPosSequence=DOTween.Sequence();
             shootSyncPosSequence.Append(transform.DOScaleX(1, animDuration).SetEase(Ease.OutCirc));
             if(shootDist>radius)
@@ -190,10 +194,11 @@ public class Bubble : MonoBehaviour
             });
         }
     }
-    void Die(){
-        Sequence s=DOTween.Sequence();
-        s.Append(DOTween.To(()=>actualRadius, (value)=>ActualRadius=value, 0, shrinkDuration).SetEase(Ease.InBack));
-        s.AppendCallback(()=>Revive(Vector2.zero));
+    public void Die(){
+        if(dieSeq!=null && dieSeq.IsActive() && dieSeq.IsPlaying()) return;
+        dieSeq=DOTween.Sequence();
+        dieSeq.Append(DOTween.To(()=>actualRadius, (value)=>ActualRadius=value, 0, shrinkDuration).SetEase(Ease.InBack));
+        dieSeq.AppendCallback(()=>Revive(Vector2.zero));
     }
     void Revive(Vector2 pos){
         rgb.velocity=Vector2.zero;

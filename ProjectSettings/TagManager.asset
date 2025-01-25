@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Bounds
+  - WallWhite
+  - WallRed
   layers:
   - Default
   - TransparentFX

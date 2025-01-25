@@ -69,6 +69,14 @@ public class Player : MonoBehaviour
             lastFrameInsideRadius=insideRadius;
         }
     }
+    void OnCollisionEnter2D(Collision2D collision){
+        //collides with wall
+        if(GameManager.IsLayer(GameManager.inst.wallLayer, collision.collider.gameObject.layer)){
+            if(collision.collider.CompareTag("WallRed")){
+                Bubble.inst.Die();
+            }
+        }
+    }
     public void OnShot(Vector2 shootForce){
         Bubble.inst.insideBubble=false;
         rgb.simulated=true;
