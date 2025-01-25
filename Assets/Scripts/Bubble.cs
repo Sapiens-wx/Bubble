@@ -17,7 +17,8 @@ public class Bubble : MonoBehaviour
     public Rigidbody2D rgb;
     public CircleCollider2D circleCollider;
     public CinemachineTargetGroup cinemachineTargetGroup;
-    public LayerMask wallLayer;
+    [Header("Find Tune")]
+    public int phy_steps;
 
     public static Bubble inst;
     Camera mainCam;
@@ -27,7 +28,7 @@ public class Bubble : MonoBehaviour
     Vector2 shootDir, shootOrigin;
     float shootDist;
     [HideInInspector] public bool insideBubble;
-    public float actualRadius;
+    [HideInInspector] public float actualRadius;
     Sequence shootSyncPosSequence, dieSeq;
 
     public float ShootDist{
@@ -137,11 +138,23 @@ public class Bubble : MonoBehaviour
                 shootDist=shootDir.magnitude;
                 shootDir/=shootDist;
             }
-            //if collides with wall, then die
-            if(CollidesWithWall()){
-                mouseDown=false;
-                Die();
+            //avoid player dragging through the wall
+            float maxDist=MaxDistToWall_DirectRay();
+            if(maxDist<shootDist){
+                mouseWorldPos=shootOrigin-shootDir*maxDist;
+                shootDist=maxDist;
             }
+
+            Vector2 idealMousePos;
+            maxDist=MaxDistToWall_Player(1, out idealMousePos); //calculates the max shootDist
+            if(maxDist<shootDist){
+                //DrawPoint(mouseWorldPos, Color.red);
+                //DrawPoint(idealMousePos, Color.green);
+                shootDist=maxDist;
+                mouseWorldPos=idealMousePos;
+                shootDir=(shootOrigin-mouseWorldPos).normalized;
+            }
+
             //detect if shootDist<radius1 or not and get the moment when shootDist changes from <radius1 to >=radius1 and vice versa
             //the moment when shootDist changes from >=radius1 to <radius1
             if(shootDist<radius1&&lastFrameShootDist>=radius1){ //stop the animation
@@ -161,6 +174,10 @@ public class Bubble : MonoBehaviour
             lastFrameInsideRadius=insideRadius;
             lastFrameShootDist=shootDist;
         }
+    }
+    void DrawPoint(Vector2 point, Color color){
+        Debug.DrawLine(point+Vector2.one, point-Vector2.one, color);
+        Debug.DrawLine(point+new Vector2(-1,1), point-new Vector2(-1,1), color);
     }
     void Shoot(){
         cinemachineTargetGroup.m_Targets[0].weight=1;
@@ -244,7 +261,7 @@ public class Bubble : MonoBehaviour
             Vector2 origin_right = origin+right*y;
             Vector2 start=origin_right+shootDir*x, end=origin_right-shootDir*x;
             //right
-            hit=Physics2D.Linecast(start, end, wallLayer);
+            hit=Physics2D.Linecast(start, end, GameManager.inst.wallLayer);
             //Debug.DrawLine(start, end, Color.white);
             if(hit)
                 return true;
@@ -252,12 +269,60 @@ public class Bubble : MonoBehaviour
             Vector2 r2lOffset=right2leftOffset*y;
             start+=r2lOffset;
             end+=r2lOffset;
-            hit=Physics2D.Linecast(start, end, wallLayer);
+            hit=Physics2D.Linecast(start, end, GameManager.inst.wallLayer);
             //Debug.DrawLine(start, end, Color.white);
             if(hit)
                 return true;
         }
         return false;
+    }
+    bool CollidesWithWall_Player(float r, ref RaycastHit2D hit){
+        Vector2 origin = player.transform.position;
+        Vector2 dir=Vector2.up;
+
+        float deltaTheta=Mathf.PI*2/phy_steps;
+        for (int i = 0; i < phy_steps; ++i) {
+            dir=MathUtil.Rotate(dir, deltaTheta);
+            Vector2 end=origin+dir*r;
+
+            // right
+            hit = Physics2D.Linecast(origin, end, GameManager.inst.wallLayer);
+            Debug.DrawLine(origin, end, Color.white);
+            if (hit)
+                return true;
+        }
+
+        return false;
+    }
+    float MaxDistToWall_DirectRay(){
+        RaycastHit2D hit=Physics2D.Linecast(shootOrigin, mouseWorldPos, GameManager.inst.wallLayer);
+        return hit?hit.distance:float.MaxValue;
+    }
+    float MaxDistToWall_Player(float r, out Vector2 idealMousePos){
+        idealMousePos=mouseWorldPos;
+
+        RaycastHit2D hit;
+        Vector2 origin = mouseWorldPos;
+        Vector2 dir=Vector2.up;
+        float maxDist=float.MaxValue;
+
+        float deltaTheta=Mathf.PI*2/phy_steps;
+        for (int i = 0; i < phy_steps; ++i) {
+            dir=MathUtil.Rotate(dir, deltaTheta);
+            Vector2 end=origin+dir*r;
+
+            hit = Physics2D.Linecast(origin, end, GameManager.inst.wallLayer);
+            //Debug.DrawLine(origin, end, Color.white);
+            if (hit){
+                Vector2 _idealMousePos=hit.point-dir*r;
+                float a=(_idealMousePos-shootOrigin).magnitude;
+                if(a<maxDist){
+                    maxDist=a;
+                    idealMousePos=_idealMousePos;
+                }
+            }
+        }
+        return maxDist;
     }
     float MaxDistToReachWall(){
         Vector2 origin = transform.position;
@@ -269,13 +334,12 @@ public class Bubble : MonoBehaviour
         float a,b;
         GetEllipseAB(out a, out b);
         float minDist=float.MaxValue;
-        int steps=4;
-        for(int i=0;i<steps;++i){
-            float y=(float)i/steps*radius;
+        for(int i=0;i<phy_steps;++i){
+            float y=(float)i/phy_steps*radius;
             float xSquared = a * a * (1 - (y * y) / (b * b));
             float x = Mathf.Sqrt(xSquared);
             Vector2 origin_right = origin+right*y;
-            RaycastHit2D hit=Physics2D.Linecast(origin_right, origin_right-shootDir*x, wallLayer);
+            RaycastHit2D hit=Physics2D.Linecast(origin_right, origin_right-shootDir*x, GameManager.inst.wallLayer);
             Debug.DrawLine(origin_right,origin_right-shootDir*x, Color.white);
             if(hit){
                 float a_new=CalculateA(hit.distance,y,b);

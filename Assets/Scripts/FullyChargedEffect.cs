@@ -15,7 +15,9 @@ public class FullyChargedEffect : MonoBehaviour
         inst=this;
     }
     void Start(){
+        transform.localScale=new Vector3(fromScale, fromScale, fromScale);
         sequence=DOTween.Sequence();
+        sequence.AppendCallback(()=>{transform.localScale=new Vector3(fromScale, fromScale, fromScale);});
         sequence.Append(transform.DOScale(toScale, duration));
         sequence.Join(spr.DOFade(0, duration));
         sequence.AppendCallback(()=>{
