@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Cinemachine;
 
 public class Bubble : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class Bubble : MonoBehaviour
     [Header("Components")]
     public Rigidbody2D rgb;
     public CircleCollider2D circleCollider;
+    public CinemachineTargetGroup cinemachineTargetGroup;
     public LayerMask wallLayer;
 
     public static Bubble inst;
@@ -100,6 +102,7 @@ public class Bubble : MonoBehaviour
             player.OnReturnToBubble();
         if(insideBubble){
             if(Input.GetMouseButtonDown(0)&&MouseInsideRadius(radius)){
+                cinemachineTargetGroup.m_Targets[0].weight=0;
                 mouseDown=true;
                 if(shootSyncPosSequence!=null && shootSyncPosSequence.IsPlaying()){
                     shootSyncPosSequence.Kill();
@@ -159,6 +162,7 @@ public class Bubble : MonoBehaviour
         }
     }
     void Shoot(){
+        cinemachineTargetGroup.m_Targets[0].weight=1;
         mouseDown=false;
         //moves with bubble (player stays in the bubble)
         if(IsInsideRadius(radius1, transform.parent.position, mouseWorldPos)){ //move
