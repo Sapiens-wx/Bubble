@@ -104,38 +104,7 @@ public class Bubble : MonoBehaviour
                 if(shootSyncPosSequence!=null && shootSyncPosSequence.IsPlaying())
                     shootSyncPosSequence.Kill();
             } else if(Input.GetMouseButtonUp(0)&&mouseDown){
-                mouseDown=false;
-                //moves with bubble (player stays in the bubble)
-                if(IsInsideRadius(radius1, transform.parent.position, mouseWorldPos)){ //move
-                    //animation
-                    if(shootSyncPosSequence!=null && shootSyncPosSequence.IsPlaying())
-                        shootSyncPosSequence.Kill();
-                    shootSyncPosSequence=DOTween.Sequence();
-                    shootSyncPosSequence.Append(transform.DOScaleX(1, animDuration).SetEase(Ease.OutCirc));
-                    if(shootDist>radius)
-                        shootSyncPosSequence.Join(transform.DOLocalMove(Vector3.zero, animDuration));
-                    shootSyncPosSequence.Join(center.DOLocalMove(Vector3.zero, animDuration).SetEase(Ease.OutCirc));
-                    //movement
-                    rgb.velocity=shootDir*(spd*shootDist/radius);
-                } else{ //get out from the bubble
-                    //animation
-                    Sequence sequence=DOTween.Sequence();
-                    sequence.Append(transform.DOScaleX(1, animDuration).SetEase(Ease.OutElastic));
-                    if(shootDist>radius)
-                        sequence.Join(transform.DOLocalMove(Vector3.zero, animDuration));
-                    center.localPosition=Vector3.zero;
-                    //stop fully charged effect
-                    FullyChargedEffect.inst.Stop();
-                    //movement
-                    rgb.velocity=Vector2.zero;
-                    player.OnShot(shootDir*(shootSpd*shootDist/radius));
-                    //disable collider
-                    circleCollider.enabled=false;
-                    //enable collider after the animation
-                    sequence.AppendCallback(()=>{
-                        circleCollider.enabled=true;
-                    });
-                }
+                Shoot();
             }
         }
     }
@@ -162,15 +131,11 @@ public class Bubble : MonoBehaviour
                 shootDist=shootDir.magnitude;
                 shootDir/=shootDist;
             }
-            //if(!insideRadius){ //avoid colliding with walls
-                float maxDistToWall=MaxDistToReachWall();
-                Debug.Log($"shootDist={shootDist}, maxDistToWall={maxDistToWall}");
-                if(maxDistToWall<shootDist){
-                    mouseWorldPos=shootOrigin-shootDir*maxDistToWall;
-                    shootDist=(shootOrigin-mouseWorldPos).magnitude;
-                }
-                //Debug.Log("collide with wall: "+(maxDistToWall<shootDist).ToString());
-            //}
+            //if collides with wall, then die
+            if(CollidesWithWall()){
+                mouseDown=false;
+                Die();
+            }
             //detect if shootDist<radius1 or not and get the moment when shootDist changes from <radius1 to >=radius1 and vice versa
             //the moment when shootDist changes from >=radius1 to <radius1
             if(shootDist<radius1&&lastFrameShootDist>=radius1){ //stop the animation
@@ -190,6 +155,91 @@ public class Bubble : MonoBehaviour
             lastFrameInsideRadius=insideRadius;
             lastFrameShootDist=shootDist;
         }
+    }
+    void Shoot(){
+        mouseDown=false;
+        //moves with bubble (player stays in the bubble)
+        if(IsInsideRadius(radius1, transform.parent.position, mouseWorldPos)){ //move
+            //animation
+            if(shootSyncPosSequence!=null && shootSyncPosSequence.IsPlaying())
+                shootSyncPosSequence.Kill();
+            shootSyncPosSequence=DOTween.Sequence();
+            shootSyncPosSequence.Append(transform.DOScaleX(1, animDuration).SetEase(Ease.OutCirc));
+            if(shootDist>radius)
+                shootSyncPosSequence.Join(transform.DOLocalMove(Vector3.zero, animDuration));
+            shootSyncPosSequence.Join(center.DOLocalMove(Vector3.zero, animDuration).SetEase(Ease.OutCirc));
+            //movement
+            rgb.velocity=shootDir*(spd*shootDist/radius);
+        } else{ //get out from the bubble
+            //animation
+            Sequence sequence=DOTween.Sequence();
+            sequence.Append(transform.DOScaleX(1, animDuration).SetEase(Ease.OutElastic));
+            if(shootDist>radius)
+                sequence.Join(transform.DOLocalMove(Vector3.zero, animDuration));
+            center.localPosition=Vector3.zero;
+            //stop fully charged effect
+            FullyChargedEffect.inst.Stop();
+            //movement
+            rgb.velocity=Vector2.zero;
+            player.OnShot(shootDir*(shootSpd*shootDist/radius));
+            //disable collider
+            circleCollider.enabled=false;
+            //enable collider after the animation
+            sequence.AppendCallback(()=>{
+                circleCollider.enabled=true;
+            });
+        }
+    }
+    void Die(){
+        Sequence s=DOTween.Sequence();
+        s.Append(DOTween.To(()=>actualRadius, (value)=>ActualRadius=value, 0, shrinkDuration).SetEase(Ease.InBack));
+        s.AppendCallback(()=>Revive(Vector2.zero));
+    }
+    void Revive(Vector2 pos){
+        rgb.velocity=Vector2.zero;
+        transform.parent.position=pos;
+        transform.localPosition=Vector3.zero;
+        transform.localScale=Vector3.one;
+        center.transform.localPosition=Vector3.zero;
+        FullyChargedEffect.inst.Stop();
+        player.Start(); //reset player
+        ActualRadius=radius;
+        mouseDown=false;
+    }
+    bool CollidesWithWall(){
+        RaycastHit2D hit = new RaycastHit2D();
+        return CollidesWithWall(ref hit);
+    }
+    bool CollidesWithWall(ref RaycastHit2D hit){
+        Vector2 origin = transform.position;
+        Vector2 right=new Vector2(shootDir.y, -shootDir.x);
+        Vector2 right2leftOffset=-right*2;
+
+        float a,b;
+        GetEllipseAB(out a, out b);
+        float aa=a*a, bb=b*b;
+        int steps=4;
+        for(int i=0;i<steps;++i){
+            float y=(float)i/steps*radius;
+            float xSquared = aa * (1 - (y * y) / bb);
+            float x = Mathf.Sqrt(xSquared);
+            Vector2 origin_right = origin+right*y;
+            Vector2 start=origin_right+shootDir*x, end=origin_right-shootDir*x;
+            //right
+            hit=Physics2D.Linecast(start, end, wallLayer);
+            //Debug.DrawLine(start, end, Color.white);
+            if(hit)
+                return true;
+            //left
+            Vector2 r2lOffset=right2leftOffset*y;
+            start+=r2lOffset;
+            end+=r2lOffset;
+            hit=Physics2D.Linecast(start, end, wallLayer);
+            //Debug.DrawLine(start, end, Color.white);
+            if(hit)
+                return true;
+        }
+        return false;
     }
     float MaxDistToReachWall(){
         Vector2 origin = transform.position;
