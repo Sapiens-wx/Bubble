@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f9f5c1bac1b4594aa0b26c2c72c7d2c, type: 3}
-  m_Name: level1
+  m_Script: {fileID: 11500000, guid: a3bddfa61691c81429c5f3d1f8a90d8d, type: 3}
+  m_Name: Level_1.1
   m_EditorClassIdentifier: 
-  level: 0
-  sublevels:
-  - RockyScene
-  - RockyScene
-  tag: 1
-  collected: 0
+  sceneType: 1
+  sceneReference:
+    m_AssetGUID: 506deb254f3fea443b950c984d0ba4bc
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
