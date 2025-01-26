@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public Animator animator;
     public float spd;
     public float radius, radius1;
+    public float dieInterval;
 
     Camera mainCam;
     bool mouseDown, insideRadius, lastFrameInsideRadius;
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
     Vector2 shootDir, shootOrigin;
     float shootDist;
     Sequence returnToBubbleSeq;
+    Coroutine dieCoroutine;
     void OnDrawGizmosSelected(){
         Gizmos.DrawWireSphere(transform.position, radius);
         Gizmos.color=Color.green;
@@ -88,6 +90,8 @@ public class Player : MonoBehaviour
         Bubble.inst.Shrink();
         //enable circle collider: didn't implement here. has to delay the enable after the player passes the center of the bubble. implemented in Bubble.cs: Update().
         cc.enabled=true;
+        //start die coroutine;
+        dieCoroutine=StartCoroutine(DieAnim());
     }
     public void OnReturnToBubble(){
         //play bubble expand sound
@@ -107,6 +111,9 @@ public class Player : MonoBehaviour
             Bubble.inst.insideBubble=true;
             //disable circle collider
             cc.enabled=false;
+            //stop die coroutine
+            if(dieCoroutine!=null)
+                StopCoroutine(dieCoroutine);
         });
     }
     public void OnReturnToBubbleInterrupted(){
@@ -118,6 +125,11 @@ public class Player : MonoBehaviour
         rgb.simulated=true;
         //enable circle collider: didn't implement here. has to delay the enable after the player passes the center of the bubble. implemented in Bubble.cs: Update().
         cc.enabled=true;
+    }
+    //-------------------
+    IEnumerator DieAnim(){
+        yield return new WaitForSeconds(dieInterval);
+        Bubble.inst.Die();
     }
     //-------------------mouse input utility--------------------
     Vector2 MouseWorldPos(){

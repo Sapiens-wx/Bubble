@@ -208,6 +208,7 @@ MonoBehaviour:
   spd: 8
   radius: 1.39
   radius1: 3.09
+  dieInterval: 10
 --- !u!58 &350550421510529108
 CircleCollider2D:
   m_ObjectHideFlags: 0
