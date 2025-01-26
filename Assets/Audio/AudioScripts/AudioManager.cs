@@ -10,6 +10,9 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
 
+    [Header("Scene Management")]
+    [SerializeField] private bool isLevelSelect;
+
     [Header("FMOD Clean Up Lists")]
     private List<EventInstance> eventInstances;
     private List<StudioEventEmitter> eventEmitters;
@@ -31,6 +34,7 @@ public class AudioManager : MonoBehaviour
     [field: Header("Channel Buses")]
     [field: SerializeField] public Bus busOutBubbleMusic;
     [field: SerializeField] public Bus busInBubbleMusic;
+    [field: SerializeField] public Bus busLevelSelectMusic;
     // Start is called before the first frame update
     void Awake()
     {
@@ -40,12 +44,22 @@ public class AudioManager : MonoBehaviour
 
         busInBubbleMusic = RuntimeManager.GetBus("bus:/Music/MusicInBubble");
         busOutBubbleMusic = RuntimeManager.GetBus("bus:/Music/MusicOutBubble");
+        busLevelSelectMusic = RuntimeManager.GetBus("bus:/Music/MusicLevelSelect");
 
         SetEventInstance(FMODEvents.instance.musicInBubble);
         SetEventInstance(FMODEvents.instance.musicOutBubbleMelody);
         SetEventInstance(FMODEvents.instance.musicOutBubbleBassAndDrum);
+        SetEventInstance(FMODEvents.instance.musicLevelSelect);
 
-        StartCoroutine(TransitionInBubble(0.01f));
+        if (isLevelSelect)
+        {
+            LevelSelectMusicPlay();
+        }
+        else
+        {
+            StartCoroutine(TransitionInBubble(0.01f));
+        }
+        
     }
 
     public EventInstance SetEventInstance(EventReference eventReference)
@@ -83,8 +97,15 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(TransitionOutBubble(0.2f));
     }
 
+    public void LevelSelectMusicPlay()
+    {
+        StartCoroutine(TransitionLevelSelect(0.05f));
+    }
+
     private IEnumerator TransitionInBubble(float transitionTime)
     {
+        busLevelSelectMusic.setVolume(0);
+
         float timer = 0.0f;
         while (timer < transitionTime)
         {
@@ -99,6 +120,8 @@ public class AudioManager : MonoBehaviour
     }
     private IEnumerator TransitionOutBubble(float transitionTime)
     {
+        busLevelSelectMusic.setVolume(0);
+
         SetEventEmitter(FMODEvents.instance.glitch, fishChannel4);
         busInBubbleMusic.setVolume(0);
         busOutBubbleMusic.setVolume(0);
@@ -121,6 +144,25 @@ public class AudioManager : MonoBehaviour
         yield return null;
     }
 
+    private IEnumerator TransitionLevelSelect(float transitionTime)
+    {
+        float timer = 0.0f;
+        while (timer < transitionTime)
+        {
+            timer += Time.deltaTime;
+            busLevelSelectMusic.setVolume((timer / transitionTime));
+            busOutBubbleMusic.setVolume(1 - (timer / transitionTime));
+            busInBubbleMusic.setVolume(1 - (timer / transitionTime));
+
+            yield return new WaitForFixedUpdate();
+        }
+
+        busLevelSelectMusic.setVolume(1);
+        busOutBubbleMusic.setVolume(0);
+        busInBubbleMusic.setVolume(0);
+
+        yield return null;
+    }
     private void CleanUp()
     {
         foreach(EventInstance eventInstance in eventInstances)

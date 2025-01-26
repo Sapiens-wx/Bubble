@@ -27,6 +27,7 @@ public class FMODEvents : MonoBehaviour
     [field: SerializeField] public EventReference musicInBubble { get; private set; }
     [field: SerializeField] public EventReference musicOutBubbleMelody { get; private set; }
     [field: SerializeField] public EventReference musicOutBubbleBassAndDrum { get; private set; }
+    [field: SerializeField] public EventReference musicLevelSelect { get; private set; }
 
     
 

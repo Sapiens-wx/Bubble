@@ -154,6 +154,13 @@ MonoBehaviour:
       Data3: -1528918609
       Data4: -751375138
     Path: event:/MusicEvents/Music_OutBubble_Bass&Drums
+  <musicLevelSelect>k__BackingField:
+    Guid:
+      Data1: -2073693113
+      Data2: 1254308812
+      Data3: -684281163
+      Data4: -127530995
+    Path: event:/MusicEvents/Music_Level_Select
 --- !u!1 &5532760597679546511
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,6 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 594d747a485249f4f8c374188fa7a6f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isLevelSelect: 0
   orbChannel1: {fileID: 0}
   fishChannel1: {fileID: 0}
   fishChannel2: {fileID: 0}

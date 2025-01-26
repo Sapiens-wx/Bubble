@@ -2765,7 +2765,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65f2f498da0711c42bd90f2a4db78fd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bubble: {fileID: 1810597364}
   linePrefab: {fileID: 6990640978822312220, guid: 9ee11bd61c803354fa49de442659a293, type: 3}
   lineParent: {fileID: 260015505}
   numOfPoints: 150
