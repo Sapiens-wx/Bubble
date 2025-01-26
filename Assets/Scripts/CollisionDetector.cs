@@ -9,6 +9,9 @@ public class CollisionDetector : MonoBehaviour {
             } else if(collision.collider.CompareTag("WallRed")){
                 Bubble.inst.player.OnReturnToBubbleInterrupted();
                 Bubble.inst.Die();
+            } else if(collision.collider.CompareTag("WallGray")){
+                Bubble.inst.player.OnReturnToBubbleInterrupted();
+                Bubble.inst.Die();
             }
         }
     }
