@@ -134,4 +134,9 @@ public class AudioManager : MonoBehaviour
             eventEmitter.Stop();
         }
     }
+
+    private void OnDestroy()
+    {
+        CleanUp();
+    }
 }
