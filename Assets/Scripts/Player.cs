@@ -90,15 +90,19 @@ public class Player : MonoBehaviour
         cc.enabled=true;
     }
     public void OnReturnToBubble(){
-        //play trying to call back bubble sound
-        AudioManager.instance.SetEventEmitter(FMODEvents.instance.callBackPt1, this.gameObject);
+        //play bubble expand sound
+        AudioManager.instance.SetEventEmitter(FMODEvents.instance.callBackPt1, AudioManager.instance.bubbleChannel1);
 
-        if(Bubble.inst.insideBubble) return;
+        if (Bubble.inst.insideBubble) return;
         rgb.velocity=Vector2.zero;
         rgb.simulated=false;
         returnToBubbleSeq=DOTween.Sequence();
         returnToBubbleSeq.Append(Bubble.inst.rgb.DOMove(transform.position, 1));
         returnToBubbleSeq.AppendCallback(()=>{
+            //play bubble expand sound
+            AudioManager.instance.SetEventEmitter(FMODEvents.instance.callBackPt2, AudioManager.instance.bubbleChannel2);
+            AudioManager.instance.InBubbleMusicPlay();
+
             Bubble.inst.Expand();
             Bubble.inst.insideBubble=true;
             //disable circle collider

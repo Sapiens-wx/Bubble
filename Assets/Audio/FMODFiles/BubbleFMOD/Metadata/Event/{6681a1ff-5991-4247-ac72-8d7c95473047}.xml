@@ -5,7 +5,7 @@
 			<value>SFX_callback_pt2</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{aa6d6b81-56f5-487c-b1ef-0efdcb130d34}</destination>
@@ -96,6 +96,7 @@
 	<object class="MixerBusEffectChain" id="{00da448c-ade2-4388-aba6-d77317940e8f}">
 		<relationship name="effects">
 			<destination>{36a45fc6-b803-4149-bb92-ebceaa2618ec}</destination>
+			<destination>{4fc5226f-2058-4703-9104-eb2dff3519cd}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{4ca82509-382d-4b62-b192-653693716946}" />
@@ -109,6 +110,7 @@
 	</object>
 	<object class="MixerBusFader" id="{df1a1997-a959-44aa-9de7-c8bd0f6a5c5a}" />
 	<object class="MixerBusFader" id="{36a45fc6-b803-4149-bb92-ebceaa2618ec}" />
+	<object class="SpatialiserEffect" id="{4fc5226f-2058-4703-9104-eb2dff3519cd}" />
 	<object class="SingleSound" id="{2af1f72a-9968-4a79-8d2f-d45226652f2f}">
 		<relationship name="audioFile">
 			<destination>{fad129b8-d9f3-425e-89a1-6f39bfce1090}</destination>

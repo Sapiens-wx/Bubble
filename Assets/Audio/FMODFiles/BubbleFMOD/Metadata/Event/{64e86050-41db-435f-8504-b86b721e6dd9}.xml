@@ -5,7 +5,7 @@
 			<value>SFX_fish_idle</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{aa6d6b81-56f5-487c-b1ef-0efdcb130d34}</destination>
@@ -133,6 +133,7 @@
 	<object class="MixerBusEffectChain" id="{5decbb31-1c62-467a-aad6-a29e74a42b27}">
 		<relationship name="effects">
 			<destination>{2ae80209-0feb-4279-bd01-6f7744e06e92}</destination>
+			<destination>{23960e3f-9a80-4c64-96f2-e489b10aaad6}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{58b8491e-ff25-43b0-b12c-1f55c9314de9}" />
@@ -164,5 +165,6 @@
 	</object>
 	<object class="MixerBusPanner" id="{9776b27c-6fb5-40fa-8c31-76ec20c9bfd7}" />
 	<object class="MixerBusFader" id="{2ae80209-0feb-4279-bd01-6f7744e06e92}" />
+	<object class="SpatialiserEffect" id="{23960e3f-9a80-4c64-96f2-e489b10aaad6}" />
 	<object class="MixerBusFader" id="{6de231b0-b394-4eb3-9c68-e26a0e80d1c9}" />
 </objects>
