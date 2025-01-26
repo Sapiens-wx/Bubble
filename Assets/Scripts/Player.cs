@@ -13,7 +13,8 @@ public class Player : MonoBehaviour
     public float dieInterval;
 
     Camera mainCam;
-    bool mouseDown, insideRadius, lastFrameInsideRadius;
+    [HideInInspector] public bool mouseDown;
+    bool insideRadius, lastFrameInsideRadius;
     Vector2 mouseWorldPos;
     Vector2 shootDir, shootOrigin;
     float shootDist;
@@ -113,6 +114,8 @@ public class Player : MonoBehaviour
             //stop die coroutine
             if(dieCoroutine!=null)
                 StopCoroutine(dieCoroutine);
+            //animation
+            ResetAnimation();
         });
     }
     public void OnReturnToBubbleInterrupted(){
@@ -129,6 +132,13 @@ public class Player : MonoBehaviour
     IEnumerator DieAnim(){
         yield return new WaitForSeconds(dieInterval);
         Bubble.inst.Die();
+    }
+    public void ResetAnimation(){
+        if(!animator.GetCurrentAnimatorStateInfo(0).IsTag("idle")){
+            animator.SetTrigger("idle");
+            animator.ResetTrigger("charge");
+            animator.ResetTrigger("sprint");
+        }
     }
     //-------------------mouse input utility--------------------
     Vector2 MouseWorldPos(){
