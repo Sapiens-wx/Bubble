@@ -230,11 +230,14 @@ public class Bubble : MonoBehaviour
         }
     }
     public void Die(){
+        if(dieSeq!=null && dieSeq.IsActive() && dieSeq.IsPlaying()) return;
+
+        //play death sound effects
+        AudioManager.instance.SetEventEmitter(FMODEvents.instance.fishDeath, AudioManager.instance.fishChannel5);
         //switch music for inside bubble
         AudioManager.instance.InBubbleMusicPlay();
 
-        if(dieSeq!=null && dieSeq.IsActive() && dieSeq.IsPlaying()) return;
-        dieSeq=DOTween.Sequence();
+        dieSeq =DOTween.Sequence();
         dieSeq.Append(DOTween.To(()=>actualRadius, (value)=>ActualRadius=value, 0, shrinkDuration).SetEase(Ease.InBack));
         dieSeq.Join(player.transform.DOScale(Vector3.zero, shrinkDuration).SetEase(Ease.InBack));
         dieSeq.AppendCallback(()=>Revive(Vector2.zero));

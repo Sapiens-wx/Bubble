@@ -255,7 +255,7 @@ GameObject:
   - component: {fileID: 3834337635885271299}
   - component: {fileID: 998239921414424341}
   m_Layer: 3
-  m_Name: PlayerAudioChannel4
+  m_Name: PlayerAudioChannel4 - Glitch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -291,11 +291,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -1195356261
+      Data2: 1145129812
+      Data3: -1389765717
+      Data4: -1990695068
+    Path: event:/SFX/SFX_glitch
   Event: 
   EventPlayTrigger: 0
   EventStopTrigger: 0
@@ -305,8 +305,8 @@ MonoBehaviour:
   NonRigidbodyVelocity: 0
   Params: []
   OverrideAttenuation: 0
-  OverrideMinDistance: -1
-  OverrideMaxDistance: -1
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &5904595338794465865
 GameObject:
   m_ObjectHideFlags: 0
@@ -473,6 +473,7 @@ Transform:
   - {fileID: 207769836690539423}
   - {fileID: 6343125652731697069}
   - {fileID: 3834337635885271299}
+  - {fileID: 6650578919368797281}
   m_Father: {fileID: 7805951229473958012}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6856888113865258437
@@ -538,6 +539,69 @@ MonoBehaviour:
   OverrideAttenuation: 1
   OverrideMinDistance: 1
   OverrideMaxDistance: 40
+--- !u!1 &8177950297867306344
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6650578919368797281}
+  - component: {fileID: 4358316464891421772}
+  m_Layer: 3
+  m_Name: PlayerAUdioChannel5 - Death
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6650578919368797281
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8177950297867306344}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9097523508088874124}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4358316464891421772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8177950297867306344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1630844426
+      Data2: 1231741910
+      Data3: -1694146161
+      Data4: 765283352
+    Path: event:/SFX/SFX_fish_death
+  Event: 
+  EventPlayTrigger: 0
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 1
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 70
 --- !u!1 &8503924901473724334
 GameObject:
   m_ObjectHideFlags: 0

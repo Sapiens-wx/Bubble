@@ -5,7 +5,7 @@
 			<value>SFX_glitch</value>
 		</property>
 		<property name="outputFormat">
-			<value>2</value>
+			<value>1</value>
 		</property>
 		<relationship name="folder">
 			<destination>{aa6d6b81-56f5-487c-b1ef-0efdcb130d34}</destination>
@@ -56,7 +56,7 @@
 			<destination>{e742851b-f1d1-4ff0-a2a7-f047d520345e}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{ceed9a56-2acd-45c0-8816-ce286cdcfea3}</destination>
+			<destination>{68621bd7-d527-4fe9-a48d-5ff9ff5b88ad}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{f6a12681-c6f4-46c4-9542-7663decf6258}" />
@@ -96,7 +96,6 @@
 	<object class="MixerBusEffectChain" id="{b7b9547b-50a5-4eaf-92fa-1ae7cc3a5423}">
 		<relationship name="effects">
 			<destination>{529e625d-ca49-4943-8d33-9fd0010070d9}</destination>
-			<destination>{59d4cd1d-aab3-4bf2-9ea5-e9abdadb8944}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{0e57fc58-4463-4b95-8ae4-40f3af087baf}" />
@@ -110,7 +109,6 @@
 	</object>
 	<object class="MixerBusFader" id="{3aa069c6-07c3-4330-bfdd-fcfe3f94e0ed}" />
 	<object class="MixerBusFader" id="{529e625d-ca49-4943-8d33-9fd0010070d9}" />
-	<object class="SpatialiserEffect" id="{59d4cd1d-aab3-4bf2-9ea5-e9abdadb8944}" />
 	<object class="SingleSound" id="{94dd9d0e-f2c4-4009-abc3-978a9ee55c49}">
 		<relationship name="audioFile">
 			<destination>{e61ec0c1-1915-4b58-96ae-b0e2d52dcd64}</destination>

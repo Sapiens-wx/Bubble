@@ -1662,6 +1662,11 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 1
   m_ApplyActiveColorSpace: 1
+--- !u!1 &806136692 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8177950297867306344, guid: 760e195e1ceb5a247bf0cbb9aa6d529b, type: 3}
+  m_PrefabInstance: {fileID: 2803165008875640122}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &994532877 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6856888113865258437, guid: 760e195e1ceb5a247bf0cbb9aa6d529b, type: 3}
@@ -3873,6 +3878,10 @@ PrefabInstance:
       propertyPath: fishChannel4
       value: 
       objectReference: {fileID: 1222171093}
+    - target: {fileID: 9189754182715155483, guid: ec94d664732f0514c971c82d10b83123, type: 3}
+      propertyPath: fishChannel5
+      value: 
+      objectReference: {fileID: 806136692}
     - target: {fileID: 9189754182715155483, guid: ec94d664732f0514c971c82d10b83123, type: 3}
       propertyPath: beepingOrbObj
       value: 
