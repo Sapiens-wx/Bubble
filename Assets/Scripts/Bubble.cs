@@ -107,7 +107,7 @@ public class Bubble : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.E))
+        if(!player.mouseDown&&Input.GetMouseButtonDown(1))
             player.OnReturnToBubble();
         if (insideBubble){
             if(Input.GetMouseButtonDown(0)&&MouseInsideRadius(radius)){
@@ -243,6 +243,9 @@ public class Bubble : MonoBehaviour
         dieSeq.AppendCallback(()=>Revive(Vector2.zero));
     }
     void Revive(Vector2 pos){
+        //reset animator
+        player.ResetAnimation();
+
         rgb.velocity=Vector2.zero;
         transform.parent.position=pos;
         transform.localPosition=Vector3.zero;
@@ -253,12 +256,6 @@ public class Bubble : MonoBehaviour
         player.transform.localScale=Vector3.one;
         ActualRadius=radius;
         mouseDown=false;
-        //reset animator
-        if(!player.animator.GetCurrentAnimatorStateInfo(0).IsTag("idle")){
-            player.animator.SetTrigger("idle");
-            player.animator.ResetTrigger("charge");
-            player.animator.ResetTrigger("sprint");
-        }
     }
     bool CollidesWithWall(){
         RaycastHit2D hit = new RaycastHit2D();
