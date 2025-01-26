@@ -45,8 +45,6 @@ public class AudioManager : MonoBehaviour
         SetEventInstance(FMODEvents.instance.musicOutBubbleBassAndDrum);
 
         StartCoroutine(TransitionInBubble(0.01f));
-
-        AudioManager.instance.SetEventEmitter(FMODEvents.instance.fishSprint, AudioManager.instance.fishChannel3);
     }
 
     public EventInstance SetEventInstance(EventReference eventReference)
