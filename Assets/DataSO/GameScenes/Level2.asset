@@ -15,5 +15,5 @@ MonoBehaviour:
   level: 1
   sublevels:
   - Level_1.2
-  tag: 1
+  tag: 0
   collected: 0
