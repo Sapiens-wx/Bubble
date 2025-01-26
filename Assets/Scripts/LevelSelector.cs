@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class LevelSelector : MonoBehaviour
 {
@@ -14,12 +15,9 @@ public class LevelSelector : MonoBehaviour
     public GameObject level_unfinished;
     public GameObject level_finished;
     public GameObject level_collectable;
-    [Header("Levels")]
-    public TeleportPoint teleportPoint;
-    public GameSceneSO[] levelScenes;
 
     public static LevelSelector inst;
-    Level[] levels;
+    LevelInfo[] levels;
     int selectedLevel;
     Vector2[] points;
     Camera mainCam;
@@ -43,7 +41,7 @@ public class LevelSelector : MonoBehaviour
             selectedLevel=value;
         }
     }
-    void ScaleToValue(Level level, float val){
+    void ScaleToValue(LevelInfo level, float val){
         DOTween.To(()=>level.GetUIScale(), (value)=>level.SetUIScale(value), val, scalingDuration);
     }
 
@@ -173,11 +171,8 @@ public class LevelSelector : MonoBehaviour
             shootSyncPosSequence.Join(transform.DOLocalMove(Vector3.zero, animDuration));
         shootSyncPosSequence.Join(center.DOLocalMove(Vector3.zero, animDuration).SetEase(Ease.OutCirc));
         //load level if applicable
-        if(selectedLevel!=-1 && levelScenes[selectedLevel].tag>0){
-            teleportPoint.sceneToGo=levels[selectedLevel].scene;
-            Debug.Log(teleportPoint.sceneToGo);
-            Debug.Log(teleportPoint.sceneToGo.sceneReference);
-            teleportPoint.TriggerAction();
+        if(selectedLevel!=-1 && SceneLoader.inst.levels[selectedLevel].tag>0){
+            SceneLoader.inst.LoadLevel(selectedLevel, 0);
         }
     }
     void DetectLevel(){
@@ -193,27 +188,27 @@ public class LevelSelector : MonoBehaviour
         SelectedLevel=-1;
     }
     void UpdateLevelUI(){
-        levels=new Level[levelScenes.Length];
+        levels=new LevelInfo[SceneLoader.inst.levels.Length];
         points=new Vector2[levels.Length];
         Vector2 dir=Vector2.up;
         float deltaTheta=-Mathf.PI*2/levels.Length;
         for(int i=0;i<levels.Length;++i){
             Vector2 pos=dir*radius+(Vector2)transform.position;
-            levels[i]=new Level(levelScenes[i], level_unfinished, level_finished, level_collectable);
+            levels[i]=new LevelInfo(SceneLoader.inst.levels[i], level_unfinished, level_finished, level_collectable);
             levels[i].SetUIPos(pos);
             levels[i].SetUIScale(levelNormalScale);
-            levels[i].SetState(levelScenes[i].tag);
+            levels[i].SetState(SceneLoader.inst.levels[i].tag);
             points[i]=pos;
             dir=MathUtil.Rotate(dir, deltaTheta);
         }
 
     }
-    class Level{
-        public GameSceneSO scene;
+    class LevelInfo{
+        public Level scene;
         public GameObject level_unfinished;
         public GameObject level_finished;
         public GameObject level_collectable;
-        public Level(GameSceneSO scene, GameObject level_unfinished, GameObject level_finished, GameObject level_collectable){
+        public LevelInfo(Level scene, GameObject level_unfinished, GameObject level_finished, GameObject level_collectable){
             this.level_unfinished=GameObject.Instantiate(level_unfinished);
             this.level_finished=GameObject.Instantiate(level_finished);
             this.level_collectable=GameObject.Instantiate(level_collectable);

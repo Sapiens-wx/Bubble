@@ -6,7 +6,7 @@ using UnityEngine.Events;
 [CreateAssetMenu(menuName = "Event/SceneLoadEventSO")]
 public class SceneLoadEventSO : ScriptableObject
 {
-    public UnityAction<GameSceneSO, Vector3, Vector3, bool> LoadRequestEvent;
+    public UnityAction<Level, Vector3, Vector3, bool> LoadRequestEvent;
 
     /// <summary>
     /// request of scene loading
@@ -15,7 +15,7 @@ public class SceneLoadEventSO : ScriptableObject
     /// <param name="posToGo">player's destination position</param>
     /// <param name="bubToGo"></param>
     /// <param name="fadeScreen">if fade</param>
-    public void RaiseLoadRequestEvent(GameSceneSO locationToLoad, Vector3 posToGo, Vector3 bubToGo, bool fadeScreen)
+    public void RaiseLoadRequestEvent(Level locationToLoad, Vector3 posToGo, Vector3 bubToGo, bool fadeScreen)
     {
         LoadRequestEvent?.Invoke(locationToLoad, posToGo, bubToGo, fadeScreen);
     }

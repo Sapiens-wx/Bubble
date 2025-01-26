@@ -8,8 +8,7 @@ public class GameManager : MonoBehaviour
     public LayerMask projectileDestroyLayer;
     public LayerMask playerLayer;
     [Header("Level Info")]
-    public int level;
-    public GameSceneSO[] levels;
+    public Level[] levels;
 
 
     public static GameManager inst;
@@ -18,19 +17,19 @@ public class GameManager : MonoBehaviour
         inst=this;
     }
     void OnEnable(){
-        TeleportPoint.inst.onLevelComplete+=OnLevelComplete;
+        SceneLoader.inst.onLevelComplete+=OnLevelComplete;
     }
     void OnDisable(){
-        TeleportPoint.inst.onLevelComplete-=OnLevelComplete;
+        SceneLoader.inst.onLevelComplete-=OnLevelComplete;
     }
     public static bool IsLayer(LayerMask mask, int layer){
         return (mask.value&(1<<layer))!=0;
     }
     public void OnLevelComplete(){
-        levels[level].tag=2;
-        if(levels[level].collected)
-            levels[level].tag=3;
-        if(level<levels.Length-1 && levels[level+1].tag==0)
-            levels[level+1].tag=1;
+        levels[SceneLoader.inst.currentLevel].tag=2;
+        if(levels[SceneLoader.inst.currentLevel].collected)
+            levels[SceneLoader.inst.currentLevel].tag=3;
+        if(SceneLoader.inst.currentLevel<levels.Length-1 && levels[SceneLoader.inst.currentLevel+1].tag==0)
+            levels[SceneLoader.inst.currentLevel+1].tag=1;
     }
 }
