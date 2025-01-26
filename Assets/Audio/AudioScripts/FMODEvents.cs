@@ -27,6 +27,7 @@ public class FMODEvents : MonoBehaviour
     [field: SerializeField] public EventReference musicOutBubbleMelody { get; private set; }
     [field: SerializeField] public EventReference musicOutBubbleBassAndDrum { get; private set; }
 
+    
 
     // Start is called before the first frame update
     void Awake()

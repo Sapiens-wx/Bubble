@@ -5,7 +5,7 @@
 			<value>SFX_fish_sprint</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{aa6d6b81-56f5-487c-b1ef-0efdcb130d34}</destination>
@@ -118,6 +118,7 @@
 	<object class="MixerBusEffectChain" id="{f8a77fb9-5ced-4f6b-ab8c-a3c34ea0d6b8}">
 		<relationship name="effects">
 			<destination>{a4b15fad-f589-4419-b851-4dd6b78a2ada}</destination>
+			<destination>{ea185ef5-aa33-4462-be56-014f1070c77c}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{bd140f00-e040-401d-b9d2-60bd256c4790}" />
@@ -137,6 +138,7 @@
 	</object>
 	<object class="MixerBusPanner" id="{ed7e2fd2-7ecf-4ab0-8359-078746d8e27c}" />
 	<object class="MixerBusFader" id="{a4b15fad-f589-4419-b851-4dd6b78a2ada}" />
+	<object class="SpatialiserEffect" id="{ea185ef5-aa33-4462-be56-014f1070c77c}" />
 	<object class="SingleSound" id="{35764a77-1743-48fa-a13e-8cc5d6d0d2cc}">
 		<relationship name="audioFile">
 			<destination>{ecbe0b5d-e118-40b2-88ce-6b1f553cac8d}</destination>

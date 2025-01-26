@@ -1,0 +1,196 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3115660180459280732
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6171172466876316544}
+  m_Layer: 0
+  m_Name: AudioObjects
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6171172466876316544
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3115660180459280732}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6152028658959457583}
+  - {fileID: 1581873163555986075}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4033051506642354511
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1581873163555986075}
+  - component: {fileID: 3188575852942961638}
+  m_Layer: 0
+  m_Name: FMODEvents
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1581873163555986075
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4033051506642354511}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6171172466876316544}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3188575852942961638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4033051506642354511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 110d59f797c385949a6116360cfe054a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <fishCharging>k__BackingField:
+    Guid:
+      Data1: 1851619315
+      Data2: 1317700078
+      Data3: -1594470470
+      Data4: 1344543738
+    Path: event:/SFX/SFX_fish_charging
+  <fishSprint>k__BackingField:
+    Guid:
+      Data1: -1673024992
+      Data2: 1242151975
+      Data3: 1180246463
+      Data4: -1307727884
+    Path: event:/SFX/SFX_fish_sprint
+  <fishIdle>k__BackingField:
+    Guid:
+      Data1: 1692950608
+      Data2: 1130316251
+      Data3: 1807221893
+      Data4: -647160206
+    Path: event:/SFX/SFX_fish_idle
+  <callBackPt1>k__BackingField:
+    Guid:
+      Data1: -271665293
+      Data2: 1335762951
+      Data3: 1290952087
+      Data4: 580792321
+    Path: event:/SFX/SFX_callback_pt1
+  <callBackPt2>k__BackingField:
+    Guid:
+      Data1: 1719771647
+      Data2: 1111972241
+      Data3: 2089644716
+      Data4: 1194346389
+    Path: event:/SFX/SFX_callback_pt2
+  <fullyCharged>k__BackingField:
+    Guid:
+      Data1: 1360573891
+      Data2: 1089148901
+      Data3: 1812823947
+      Data4: 936747663
+    Path: event:/SFX/SFX_fully_charged
+  <glitch>k__BackingField:
+    Guid:
+      Data1: -1195356261
+      Data2: 1145129812
+      Data3: -1389765717
+      Data4: -1990695068
+    Path: event:/SFX/SFX_glitch
+  <musicInBubble>k__BackingField:
+    Guid:
+      Data1: -1023944659
+      Data2: 1214358949
+      Data3: 1924298687
+      Data4: 853498491
+    Path: event:/MusicEvents/Music_InBubble
+  <musicOutBubbleMelody>k__BackingField:
+    Guid:
+      Data1: -421663932
+      Data2: 1198562593
+      Data3: -1552484166
+      Data4: 951636397
+    Path: event:/MusicEvents/Music_OutBubble_Melody
+  <musicOutBubbleBassAndDrum>k__BackingField:
+    Guid:
+      Data1: 2055113350
+      Data2: 1146053534
+      Data3: -1528918609
+      Data4: -751375138
+    Path: event:/MusicEvents/Music_OutBubble_Bass&Drums
+--- !u!1 &5532760597679546511
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6152028658959457583}
+  - component: {fileID: 9189754182715155483}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6152028658959457583
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5532760597679546511}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6171172466876316544}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9189754182715155483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5532760597679546511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 594d747a485249f4f8c374188fa7a6f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fishObj: {fileID: 0}
+  beepingOrbObj: {fileID: 0}
+  bubbleObj: {fileID: 0}

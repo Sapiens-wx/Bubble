@@ -28,10 +28,12 @@ public class FullyChargedEffect : MonoBehaviour
         Stop();
     }
     public void Play(){
+        AudioManager.instance.SetEventEmitter(FMODEvents.instance.fullyCharged, AudioManager.instance.orbChannel1);
         gameObject.SetActive(true);
         sequence.Restart();
     }
     public void Stop(){
+        AudioManager.instance.StopEventEmitter(AudioManager.instance.orbChannel1);
         gameObject.SetActive(false);
         sequence.Pause();
     }
