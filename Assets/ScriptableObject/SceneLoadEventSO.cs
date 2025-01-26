@@ -13,6 +13,7 @@ public class SceneLoadEventSO : ScriptableObject
     /// </summary>
     /// <param name="locationToLoad">to load scene</param>
     /// <param name="posToGo">player's destination position</param>
+    /// <param name="bubToGo"></param>
     /// <param name="fadeScreen">if fade</param>
     public void RaiseLoadRequestEvent(GameSceneSO locationToLoad, Vector3 posToGo, Vector3 bubToGo, bool fadeScreen)
     {
