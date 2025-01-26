@@ -22,6 +22,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] public GameObject fishChannel2;
     [SerializeField] public GameObject fishChannel3;
     [SerializeField] public GameObject fishChannel4;
+    [SerializeField] public GameObject fishChannel5;
 
     [Header("Bubble Object Channels")]
     [SerializeField] public GameObject bubbleChannel1;

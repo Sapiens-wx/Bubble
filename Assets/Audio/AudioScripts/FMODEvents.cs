@@ -11,6 +11,7 @@ public class FMODEvents : MonoBehaviour
     [field: SerializeField] public EventReference fishCharging { get; private set; }
     [field: SerializeField] public EventReference fishSprint { get; private set; }
     [field: SerializeField] public EventReference fishIdle { get; private set; }
+    [field: SerializeField] public EventReference fishDeath { get; private set; }
 
     [field: Header("Bubble Object")]
     [field: SerializeField] public EventReference callBackPt1 { get; private set; }
