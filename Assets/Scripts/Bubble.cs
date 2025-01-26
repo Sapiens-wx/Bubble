@@ -107,7 +107,7 @@ public class Bubble : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.E))
             player.OnReturnToBubble();
-        if(insideBubble){
+        if (insideBubble){
             if(Input.GetMouseButtonDown(0)&&MouseInsideRadius(radius)){
                 cinemachineTargetGroup.m_Targets[0].weight=0;
                 mouseDown=true;

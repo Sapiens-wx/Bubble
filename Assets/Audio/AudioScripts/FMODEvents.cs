@@ -22,6 +22,12 @@ public class FMODEvents : MonoBehaviour
     [field: Header("Glitch Sound")]
     [field: SerializeField] public EventReference glitch { get; private set; }
 
+    [field: Header("Music Events")]
+    [field: SerializeField] public EventReference musicInBubble { get; private set; }
+    [field: SerializeField] public EventReference musicOutBubbleMelody { get; private set; }
+    [field: SerializeField] public EventReference musicOutBubbleBassAndDrum { get; private set; }
+
+
     // Start is called before the first frame update
     void Awake()
     {

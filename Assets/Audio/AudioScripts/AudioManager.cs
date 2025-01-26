@@ -22,10 +22,11 @@ public class AudioManager : MonoBehaviour
         instance = this;
         eventInstances = new List<EventInstance>();
         eventEmitters = new List<StudioEventEmitter>();
-        
+
+        SetEventInstance(FMODEvents.instance.musicInBubble);
     }
 
-    public EventInstance CreateEventInstance(EventReference eventReference)
+    public EventInstance SetEventInstance(EventReference eventReference)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
         eventInstances.Add(eventInstance);
@@ -47,6 +48,15 @@ public class AudioManager : MonoBehaviour
         emitter.Stop();
         eventEmitters.Remove(emitter);
         return emitter;
+    }
+
+    public void InBubbleMusicPlay()
+    {
+
+    }
+    public void OutBubbleMusicPlay()
+    {
+
     }
 
     private void CleanUp()

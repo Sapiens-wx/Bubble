@@ -395,11 +395,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 1851619315
-      Data2: 1317700078
-      Data3: -1594470470
-      Data4: 1344543738
-    Path: event:/SFX/SFX_fish_charging
+      Data1: -271665293
+      Data2: 1335762951
+      Data3: 1290952087
+      Data4: 580792321
+    Path: event:/SFX/SFX_callback_pt1
   Event: 
   EventPlayTrigger: 0
   EventStopTrigger: 0
@@ -408,9 +408,9 @@ MonoBehaviour:
   Preload: 0
   NonRigidbodyVelocity: 0
   Params: []
-  OverrideAttenuation: 1
+  OverrideAttenuation: 0
   OverrideMinDistance: 1
-  OverrideMaxDistance: 6
+  OverrideMaxDistance: 20
 --- !u!1 &140159548
 GameObject:
   m_ObjectHideFlags: 0
@@ -3691,6 +3691,27 @@ MonoBehaviour:
       Data3: -1389765717
       Data4: -1990695068
     Path: event:/SFX/SFX_glitch
+  <musicInBubble>k__BackingField:
+    Guid:
+      Data1: -1023944659
+      Data2: 1214358949
+      Data3: 1924298687
+      Data4: 853498491
+    Path: event:/MusicEvents/Music_InBubble
+  <musicOutBubbleMelody>k__BackingField:
+    Guid:
+      Data1: -421663932
+      Data2: 1198562593
+      Data3: -1552484166
+      Data4: 951636397
+    Path: event:/MusicEvents/Music_OutBubble_Melody
+  <musicOutBubbleBassAndDrum>k__BackingField:
+    Guid:
+      Data1: 2055113350
+      Data2: 1146053534
+      Data3: -1528918609
+      Data4: -751375138
+    Path: event:/MusicEvents/Music_OutBubble_Bass&Drums
 --- !u!1 &1987796697
 GameObject:
   m_ObjectHideFlags: 0

@@ -91,7 +91,7 @@ public class Player : MonoBehaviour
     }
     public void OnReturnToBubble(){
         //play trying to call back bubble sound
-        AudioManager.instance.SetEventEmitter(FMODEvents.instance.callBackPt1, this.gameObject);
+        //AudioManager.instance.SetEventEmitter(FMODEvents.instance.callBackPt1, this.gameObject);
 
         if(Bubble.inst.insideBubble) return;
         rgb.velocity=Vector2.zero;
@@ -99,6 +99,9 @@ public class Player : MonoBehaviour
         returnToBubbleSeq=DOTween.Sequence();
         returnToBubbleSeq.Append(Bubble.inst.rgb.DOMove(transform.position, 1));
         returnToBubbleSeq.AppendCallback(()=>{
+            //play bubble expand sound
+            AudioManager.instance.SetEventEmitter(FMODEvents.instance.callBackPt2, this.gameObject);
+
             Bubble.inst.Expand();
             Bubble.inst.insideBubble=true;
             //disable circle collider
