@@ -5,7 +5,7 @@
 			<value>-1</value>
 		</property>
 		<property name="name">
-			<value>SFX</value>
+			<value>SFX_with_reverb</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{d0090862-42b7-42ba-b4a8-35acf72a2f88}</destination>

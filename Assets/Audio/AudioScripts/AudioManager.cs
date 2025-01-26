@@ -74,11 +74,12 @@ public class AudioManager : MonoBehaviour
 
     public void InBubbleMusicPlay()
     {
+        busInBubbleMusic.setVolume(1);
         StartCoroutine(TransitionInBubble(0.5f));
     }
     public void OutBubbleMusicPlay()
     {
-        StartCoroutine(TransitionOutBubble(0.5f));
+        StartCoroutine(TransitionOutBubble(0.2f));
     }
 
     private IEnumerator TransitionInBubble(float transitionTime)
@@ -97,15 +98,23 @@ public class AudioManager : MonoBehaviour
     }
     private IEnumerator TransitionOutBubble(float transitionTime)
     {
+        SetEventEmitter(FMODEvents.instance.glitch, fishChannel4);
+        busInBubbleMusic.setVolume(0);
+        busOutBubbleMusic.setVolume(0);
+
+        yield return new WaitForSeconds(0.214f);
+
         float timer = 0.0f;
         while (timer < transitionTime)
         {
             timer += Time.deltaTime;
             busOutBubbleMusic.setVolume((timer / transitionTime));
+            busInBubbleMusic.setVolume((timer / transitionTime));
 
             yield return new WaitForFixedUpdate();
         }
 
+        busInBubbleMusic.setVolume(1);
         busOutBubbleMusic.setVolume(1);
 
         yield return null;

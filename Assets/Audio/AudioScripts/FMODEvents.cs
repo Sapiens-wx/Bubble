@@ -34,10 +34,4 @@ public class FMODEvents : MonoBehaviour
     {
         instance = this;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
