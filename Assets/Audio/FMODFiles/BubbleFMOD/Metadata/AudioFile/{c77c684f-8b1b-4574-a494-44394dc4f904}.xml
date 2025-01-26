@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{c77c684f-8b1b-4574-a494-44394dc4f904}">
+		<property name="assetPath">
+			<value>SFX_Mixed/SFX_fish_charging_swing_layer.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>44.0999985</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>3.8571428571428572</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{cb00d35c-640b-4485-88d4-fe69a00623f5}</destination>
+		</relationship>
+	</object>
+</objects>

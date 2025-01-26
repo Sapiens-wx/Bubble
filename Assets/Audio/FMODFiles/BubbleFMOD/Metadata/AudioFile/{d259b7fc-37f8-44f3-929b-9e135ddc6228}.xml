@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="AudioFile" id="{d259b7fc-37f8-44f3-929b-9e135ddc6228}">
 		<property name="assetPath">
-			<value>OST_OutOfBubble_Bass.wav</value>
+			<value>Music/OST_OutOfBubble_Bass.wav</value>
 		</property>
 		<property name="isStreaming">
 			<value>true</value>
