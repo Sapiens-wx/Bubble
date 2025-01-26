@@ -18,6 +18,8 @@ public class CircleGen : MonoBehaviour
     public static CircleGen inst;
     [HideInInspector] [SerializeField] Line[] lines;
     float centerDist;
+    [HideInInspector] public Transform anchor, self;
+    [HideInInspector] public float radius;
     void OnValidate(){
         InitLineRenderers();
         UpdateCircles();
@@ -81,7 +83,8 @@ public class CircleGen : MonoBehaviour
         }
     }
     void UpdateCircles(){
-        centerDist=((Vector2)(bubble.center.position-bubble.transform.position)).magnitude;
+        if(anchor==null) return;
+        centerDist=((Vector2)(anchor.position-self.position)).magnitude;
         //0-numOfLines: inside to outside
         for(int i=0;i<numOfLines;++i){
             DrawEllipsePolar(i, (i+1f)/numOfLines, 1-((i+1f)/numOfLines));
@@ -107,8 +110,8 @@ public class CircleGen : MonoBehaviour
             float r = Mathf.Sqrt( aabb / (bb * cos*cos + aa * sin*sin));
             float xpos = r * cos;
             float ypos = r * sin;
-            xpos+=(a-a_unscaled)*Mathf.Clamp01(centerDist/bubble.actualRadius);
-            Vector2 pos=MathUtil.Rotate(new Vector2(xpos,ypos)*bubble.actualRadius, transform.eulerAngles.z*Mathf.Deg2Rad);
+            xpos+=(a-a_unscaled)*Mathf.Clamp01(centerDist/radius);
+            Vector2 pos=MathUtil.Rotate(new Vector2(xpos,ypos)*radius, transform.eulerAngles.z*Mathf.Deg2Rad);
             line.SetPosition(i, transform.position+(Vector3)pos);
         }
     }

@@ -38,6 +38,10 @@ public class Bubble : MonoBehaviour
         get=>actualRadius;
         set{
             actualRadius=value;
+            #if UNITY_EDITOR
+            if(CircleGen.inst!=null)
+                CircleGen.inst.radius=value;
+            #endif
             circleCollider.radius=actualRadius;
         }
     }
@@ -61,6 +65,8 @@ public class Bubble : MonoBehaviour
     {
         mainCam=Camera.main;
         ActualRadius=radius;
+        CircleGen.inst.anchor=center;
+        CircleGen.inst.self=transform;
     }
     Vector2 MouseWorldPos(){
         return mainCam.ScreenToWorldPoint(Input.mousePosition);
