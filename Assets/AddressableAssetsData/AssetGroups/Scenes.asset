@@ -22,18 +22,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 32f4852954f8b634596148580b4ab5d6
-    m_Address: Level_1.3
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 506deb254f3fea443b950c984d0ba4bc
-    m_Address: Level_1.1
+    m_Address: Assets/Scenes/Level_1Scenes/Level_1.1.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 7bc4638d468f1c24487aa03f9657dd25
-    m_Address: Level_1.2
+  - m_GUID: 91edf7fc8cc0bb2459a7a3f65571ef47
+    m_Address: Assets/Scenes/RockyScene.unity
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
