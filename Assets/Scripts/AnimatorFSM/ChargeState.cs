@@ -11,6 +11,7 @@ public class ChargeState : StateMachineBehaviour
     }
     public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        AudioManager.instance.StopEventEmitter(AudioManager.instance.fishChannel2);
         base.OnStateExit(animator, stateInfo, layerIndex);
     }
 }

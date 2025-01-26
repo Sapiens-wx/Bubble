@@ -13,7 +13,7 @@ public class EmptyWall : MonoBehaviour
 
     private void Awake()
     {
-        spriteRenderer = emptyWall.GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
     
     private void Start()
@@ -34,31 +34,32 @@ public class EmptyWall : MonoBehaviour
         }
     }
 
+    void LoadNextLevel(){
+        SceneLoader.inst.LoadNextLevel();
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !Bubble.inst.insideBubble)
+        if (GameManager.IsLayer(GameManager.inst.playerLayer, other.gameObject.layer))
         {
-            canPass = false;
+            if(Bubble.inst.insideBubble){
+                canPass=true;
+                LoadNextLevel();
+            }
+            else{
+                canPass = false;
+                if (spriteRenderer != null)
+                    spriteRenderer.enabled = true; 
+                if (subtitleUI != null)
+                    subtitleUI.SetActive(true); 
+            }
             
-            if (spriteRenderer != null)
-            {
-                spriteRenderer.enabled = true; 
-            }
-
-            if (subtitleUI != null)
-            {
-                subtitleUI.SetActive(true); 
-            }
-        }
-        else
-        {
-            canPass = true;
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (GameManager.IsLayer(GameManager.inst.playerLayer, other.gameObject.layer))
         {
             if (spriteRenderer != null)
             {

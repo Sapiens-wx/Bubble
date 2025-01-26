@@ -54,6 +54,11 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 8
+  level: 0
+  levels:
+  - {fileID: 11400000, guid: cf8726caf3164374182006f8564e27ed, type: 2}
+  - {fileID: 11400000, guid: bd52c9b115aa15247bb7a70f2893a6cb, type: 2}
+  - {fileID: 11400000, guid: b51ed7964cbed98409db78123467887c, type: 2}
 --- !u!114 &2759864599466177624
 MonoBehaviour:
   m_ObjectHideFlags: 0

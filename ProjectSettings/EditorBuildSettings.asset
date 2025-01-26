@@ -8,5 +8,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/LevelSelect.unity
+    guid: 5092dc2011d591c40b5016fb29004e10
+  - enabled: 1
+    path: Assets/Scenes/Level_1Scenes/Level_1.1.unity
+    guid: 506deb254f3fea443b950c984d0ba4bc
+  - enabled: 1
+    path: Assets/Scenes/RockyScene.unity
+    guid: 91edf7fc8cc0bb2459a7a3f65571ef47
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: e374c0330dc286a418bf5672087007c3, type: 2}

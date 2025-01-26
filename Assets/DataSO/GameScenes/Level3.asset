@@ -9,12 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3bddfa61691c81429c5f3d1f8a90d8d, type: 3}
-  m_Name: Level_1.2
+  m_Script: {fileID: 11500000, guid: 5f9f5c1bac1b4594aa0b26c2c72c7d2c, type: 3}
+  m_Name: level3
   m_EditorClassIdentifier: 
-  sceneType: 1
-  sceneReference:
-    m_AssetGUID: 7bc4638d468f1c24487aa03f9657dd25
-    m_SubObjectName: 
-    m_SubObjectType: 
-    m_EditorAssetChanged: 0
+  level: 2
+  sublevels:
+  - 
+  tag: 0
+  collected: 0

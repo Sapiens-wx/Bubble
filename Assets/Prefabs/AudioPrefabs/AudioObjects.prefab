@@ -98,6 +98,13 @@ MonoBehaviour:
       Data3: 1807221893
       Data4: -647160206
     Path: event:/SFX/SFX_fish_idle
+  <fishDeath>k__BackingField:
+    Guid:
+      Data1: 1630844426
+      Data2: 1231741910
+      Data3: -1694146161
+      Data4: 765283352
+    Path: event:/SFX/SFX_fish_death
   <callBackPt1>k__BackingField:
     Guid:
       Data1: -271665293
@@ -191,6 +198,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 594d747a485249f4f8c374188fa7a6f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fishObj: {fileID: 0}
-  beepingOrbObj: {fileID: 0}
-  bubbleObj: {fileID: 0}
+  orbChannel1: {fileID: 0}
+  fishChannel1: {fileID: 0}
+  fishChannel2: {fileID: 0}
+  fishChannel3: {fileID: 0}
+  fishChannel4: {fileID: 0}
+  fishChannel5: {fileID: 0}
+  bubbleChannel1: {fileID: 0}
+  bubbleChannel2: {fileID: 0}
