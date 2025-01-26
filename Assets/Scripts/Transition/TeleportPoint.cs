@@ -10,9 +10,10 @@ public class TeleportPoint : MonoBehaviour
    
    public Vector3 positionToGo;
 
+   public Vector3 bubbleToGo;
    public void TriggerAction()
    {
-      loadEventSo.RaiseLoadRequestEvent(sceneToGo, positionToGo, true);
+      loadEventSo.RaiseLoadRequestEvent(sceneToGo, positionToGo, bubbleToGo, true);
       
    }
 }
