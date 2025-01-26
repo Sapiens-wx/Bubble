@@ -10,14 +10,11 @@ public class EmptyWall : MonoBehaviour
     public GameObject subtitleUI;
 
     private SpriteRenderer spriteRenderer;
-
+    private IInteractable targetItem;
     private void Awake()
     {
         spriteRenderer = emptyWall.GetComponent<SpriteRenderer>();
-        if (Bubble.inst.insideBubble)
-        {
-            canPass = true;
-        }
+        targetItem = GetComponent<IInteractable>();
     }
     
     private void Start()
@@ -41,7 +38,7 @@ public class EmptyWall : MonoBehaviour
     {
         Debug.Log(other.gameObject.tag);
         
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !Bubble.inst.insideBubble)
         {
             canPass = false;
             
@@ -58,6 +55,8 @@ public class EmptyWall : MonoBehaviour
         else
         {
             canPass = true;
+            Debug.Log("传送");
+            targetItem.TriggerAction();
         }
     }
 

@@ -24,7 +24,7 @@ public class SceneLoader : MonoBehaviour
     [Header("Scene")]
     public GameSceneSO firstLoadScene;
     public GameSceneSO menuScene;
-    private GameSceneSO currentLoadedScene;
+    public GameSceneSO currentLoadedScene;
     private GameSceneSO sceneToLoad;
     private Vector3 positionToGo;
     private Vector3 bubbleToGo;
@@ -32,12 +32,12 @@ public class SceneLoader : MonoBehaviour
     private bool isLoading;
     
     public float fadeDuration;
-    /*private void Awake()
+    private void Awake()
     {
         //Addressables.LoadSceneAsync(firstLoadScene.sceneReference, LoadSceneMode.Additive);
-        currentLoadedScene = firstLoadScene;
+        currentLoadedScene= firstLoadScene;
         currentLoadedScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive);
-    }*/
+    }
 
     private void Start()
     {
@@ -76,7 +76,8 @@ public class SceneLoader : MonoBehaviour
         positionToGo = posToGo;
         bubbleToGo = bubToGo;
         this.fadeScreen = fadeScreen;
-
+        Debug.Log("到达");
+        
         if (currentLoadedScene != null)
         {
             StartCoroutine(UnLoadCurrentScene());

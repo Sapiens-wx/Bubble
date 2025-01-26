@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TeleportPoint : MonoBehaviour
+public class TeleportPoint : MonoBehaviour,IInteractable
 {
    public SceneLoadEventSO loadEventSo;
    
@@ -15,7 +15,7 @@ public class TeleportPoint : MonoBehaviour
    public int tag;
    public void TriggerAction()
    {
+      Debug.Log("Where are you?");
       loadEventSo.RaiseLoadRequestEvent(sceneToGo, positionToGo, bubbleToGo, true);
-      
    }
 }
