@@ -618,7 +618,6 @@ LineRenderer:
   - {x: 1.9133642, y: -0.24171387, z: 0}
   - {x: 1.9218079, y: -0.16137874, z: 0}
   - {x: 1.9268798, y: -0.08075958, z: 0}
-  - {x: 1.9285716, y: 0.00000033720218, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -789,8 +788,8 @@ GameObject:
   m_Component:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
-  - component: {fileID: 519420029}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -798,14 +797,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &519420029
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -906,6 +897,20 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1 &550826020
 GameObject:
   m_ObjectHideFlags: 0
@@ -1145,7 +1150,6 @@ LineRenderer:
   - {x: 1.5944701, y: -0.20142823, z: 0}
   - {x: 1.6015064, y: -0.13448226, z: 0}
   - {x: 1.6057333, y: -0.06729965, z: 0}
-  - {x: 1.6071429, y: 0.00000028100177, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -1583,7 +1587,6 @@ LineRenderer:
   - {x: 0.9566821, y: -0.12085693, z: 0}
   - {x: 0.96090394, y: -0.08068937, z: 0}
   - {x: 0.9634399, y: -0.04037979, z: 0}
-  - {x: 0.9642858, y: 0.00000016860109, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -2021,7 +2024,6 @@ LineRenderer:
   - {x: 1.2755761, y: -0.16114259, z: 0}
   - {x: 1.2812052, y: -0.107585825, z: 0}
   - {x: 1.2845867, y: -0.05383972, z: 0}
-  - {x: 1.2857144, y: 0.00000022480144, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -2531,7 +2533,6 @@ LineRenderer:
   - {x: 2.232258, y: -0.2819995, z: 0}
   - {x: 2.2421088, y: -0.18827519, z: 0}
   - {x: 2.2480264, y: -0.094219506, z: 0}
-  - {x: 2.25, y: 0.0000003934025, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -2765,6 +2766,9 @@ MonoBehaviour:
   - {fileID: 550826022}
   - {fileID: 140159550}
   - {fileID: 1473652155}
+  anchor: {fileID: 0}
+  self: {fileID: 0}
+  radius: 0
 --- !u!114 &1893598459 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5457223802784042150, guid: 760e195e1ceb5a247bf0cbb9aa6d529b, type: 3}
@@ -3020,7 +3024,6 @@ LineRenderer:
   - {x: 0.63778806, y: -0.080571294, z: 0}
   - {x: 0.6406026, y: -0.053792913, z: 0}
   - {x: 0.64229333, y: -0.02691986, z: 0}
-  - {x: 0.6428572, y: 0.00000011240072, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -3328,7 +3331,6 @@ LineRenderer:
   - {x: 0.31889403, y: -0.040285647, z: 0}
   - {x: 0.3203013, y: -0.026896456, z: 0}
   - {x: 0.32114667, y: -0.01345993, z: 0}
-  - {x: 0.3214286, y: 0.00000005620036, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1

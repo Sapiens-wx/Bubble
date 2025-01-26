@@ -38,6 +38,10 @@ public class Bubble : MonoBehaviour
         get=>actualRadius;
         set{
             actualRadius=value;
+            #if UNITY_EDITOR
+            if(CircleGen.inst!=null)
+                CircleGen.inst.radius=value;
+            #endif
             circleCollider.radius=actualRadius;
         }
     }
@@ -61,6 +65,8 @@ public class Bubble : MonoBehaviour
     {
         mainCam=Camera.main;
         ActualRadius=radius;
+        CircleGen.inst.anchor=center;
+        CircleGen.inst.self=transform;
     }
     Vector2 MouseWorldPos(){
         return mainCam.ScreenToWorldPoint(Input.mousePosition);
@@ -101,7 +107,7 @@ public class Bubble : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.E))
             player.OnReturnToBubble();
-        if(insideBubble){
+        if (insideBubble){
             if(Input.GetMouseButtonDown(0)&&MouseInsideRadius(radius)){
                 cinemachineTargetGroup.m_Targets[0].weight=0;
                 mouseDown=true;
@@ -198,6 +204,9 @@ public class Bubble : MonoBehaviour
             //movement
             rgb.velocity=shootDir*(spd*shootDist/radius);
         } else{ //get out from the bubble
+            //music switch for getting out of bubble
+            AudioManager.instance.OutBubbleMusicPlay();
+
             //animation
             player.animator.SetTrigger("sprint");
             Sequence sequence=DOTween.Sequence();
@@ -219,6 +228,9 @@ public class Bubble : MonoBehaviour
         }
     }
     public void Die(){
+        //switch music for inside bubble
+        AudioManager.instance.InBubbleMusicPlay();
+
         if(dieSeq!=null && dieSeq.IsActive() && dieSeq.IsPlaying()) return;
         dieSeq=DOTween.Sequence();
         dieSeq.Append(DOTween.To(()=>actualRadius, (value)=>ActualRadius=value, 0, shrinkDuration).SetEase(Ease.InBack));
