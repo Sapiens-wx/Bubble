@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
     public int level;
     public GameSceneSO[] levels;
 
-    [HideInInspector] public bool collected;
 
     public static GameManager inst;
     void Awake()
@@ -29,7 +28,7 @@ public class GameManager : MonoBehaviour
     }
     public void OnLevelComplete(){
         levels[level].tag=2;
-        if(collected)
+        if(levels[level].collected)
             levels[level].tag=3;
         if(level<levels.Length-1 && levels[level+1].tag==0)
             levels[level+1].tag=1;
