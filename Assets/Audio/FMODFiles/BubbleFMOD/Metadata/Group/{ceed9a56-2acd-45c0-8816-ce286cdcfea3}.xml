@@ -26,6 +26,9 @@
 	<object class="MixerBusPanner" id="{e29bf1df-02cd-42ea-926c-049765da1f7e}" />
 	<object class="MixerBusFader" id="{83187a32-ef72-475d-8fea-34d1789f77ba}" />
 	<object class="SFXReverbEffect" id="{28a7b584-d004-4c9f-ac5a-ad20ba67da86}">
+		<property name="decayTime">
+			<value>3000</value>
+		</property>
 		<property name="lowShelfFrequency">
 			<value>350</value>
 		</property>
