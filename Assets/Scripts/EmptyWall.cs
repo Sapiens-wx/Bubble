@@ -14,15 +14,14 @@ public class EmptyWall : MonoBehaviour
     private void Awake()
     {
         spriteRenderer = emptyWall.GetComponent<SpriteRenderer>();
-    }
-    
-    private void Start()
-    {
         if (Bubble.inst.insideBubble)
         {
             canPass = true;
         }
-        
+    }
+    
+    private void Start()
+    {
         if (spriteRenderer != null)
         {
             spriteRenderer.enabled = false;
@@ -34,9 +33,15 @@ public class EmptyWall : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        //Debug.Log(Bubble.inst.insideBubble);
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !Bubble.inst.insideBubble)
+        Debug.Log(other.gameObject.tag);
+        
+        if (other.CompareTag("Player"))
         {
             canPass = false;
             
