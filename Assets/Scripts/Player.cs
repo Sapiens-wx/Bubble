@@ -94,10 +94,9 @@ public class Player : MonoBehaviour
         dieCoroutine=StartCoroutine(DieAnim());
     }
     public void OnReturnToBubble(){
+        if (Bubble.inst.insideBubble) return;
         //play bubble expand sound
         AudioManager.instance.SetEventEmitter(FMODEvents.instance.callBackPt1, AudioManager.instance.bubbleChannel1);
-
-        if (Bubble.inst.insideBubble) return;
         rgb.velocity=Vector2.zero;
         rgb.simulated=false;
         returnToBubbleSeq=DOTween.Sequence();
