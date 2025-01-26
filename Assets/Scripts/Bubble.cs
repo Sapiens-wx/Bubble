@@ -41,6 +41,8 @@ public class Bubble : MonoBehaviour
             #if UNITY_EDITOR
             if(CircleGen.inst!=null)
                 CircleGen.inst.radius=value;
+            #else
+            CircleGen.inst.radius=value;
             #endif
             circleCollider.radius=actualRadius;
         }

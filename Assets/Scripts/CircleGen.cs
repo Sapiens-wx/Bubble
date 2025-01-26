@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class CircleGen : MonoBehaviour
 {
-    public Bubble bubble;
     public GameObject linePrefab;
     public Transform lineParent;
     public int numOfPoints;
