@@ -10,19 +10,15 @@ public class EmptyWall : MonoBehaviour
     public GameObject subtitleUI;
 
     private SpriteRenderer spriteRenderer;
-
+    private IInteractable targetItem;
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = emptyWall.GetComponent<SpriteRenderer>();
+        targetItem = GetComponent<IInteractable>();
     }
     
     private void Start()
     {
-        if (Bubble.inst.insideBubble)
-        {
-            canPass = true;
-        }
-        
         if (spriteRenderer != null)
         {
             spriteRenderer.enabled = false;
@@ -34,32 +30,39 @@ public class EmptyWall : MonoBehaviour
         }
     }
 
-    void LoadNextLevel(){
-        SceneLoader.inst.LoadNextLevel();
+    private void Update()
+    {
+        //Debug.Log(Bubble.inst.insideBubble);
     }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (GameManager.IsLayer(GameManager.inst.playerLayer, other.gameObject.layer))
+        Debug.Log(other.gameObject.tag);
+        
+        if (other.CompareTag("Player") && !Bubble.inst.insideBubble)
         {
-            if(Bubble.inst.insideBubble){
-                canPass=true;
-                LoadNextLevel();
-            }
-            else{
-                canPass = false;
-                if (spriteRenderer != null)
-                    spriteRenderer.enabled = true; 
-                if (subtitleUI != null)
-                    subtitleUI.SetActive(true); 
-            }
+            canPass = false;
             
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.enabled = true; 
+            }
+
+            if (subtitleUI != null)
+            {
+                subtitleUI.SetActive(true); 
+            }
+        }
+        else
+        {
+            canPass = true;
+            Debug.Log("传送");
+            targetItem.TriggerAction();
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (GameManager.IsLayer(GameManager.inst.playerLayer, other.gameObject.layer))
+        if (other.CompareTag("Player"))
         {
             if (spriteRenderer != null)
             {
