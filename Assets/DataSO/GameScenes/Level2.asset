@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 1
   sublevels:
-  - 
-  tag: 0
+  - Level_1.2
+  tag: 1
   collected: 0

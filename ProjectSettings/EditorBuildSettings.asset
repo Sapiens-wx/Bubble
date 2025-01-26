@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/StartScene.unity
+    guid: 0c8d96fa1acb12548b3b8b2082183599
   - enabled: 1
     path: Assets/Scenes/LevelSelect.unity
     guid: 5092dc2011d591c40b5016fb29004e10
@@ -15,10 +15,10 @@ EditorBuildSettings:
     path: Assets/Scenes/Level_1Scenes/Level_1.1.unity
     guid: 506deb254f3fea443b950c984d0ba4bc
   - enabled: 1
-    path: Assets/Scenes/RockyScene.unity
-    guid: 91edf7fc8cc0bb2459a7a3f65571ef47
+    path: Assets/Scenes/Level_1Scenes/Level_1.2.unity
+    guid: 7bc4638d468f1c24487aa03f9657dd25
   - enabled: 1
-    path: Assets/Scenes/CharlesScene.unity
-    guid: b2fd9e7f765cebd4197c12bbd23336bc
+    path: Assets/Scenes/Level_2Scenes/2-1.unity
+    guid: 74a5d5a35ada0c84698b7bbc0f89e507
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: e374c0330dc286a418bf5672087007c3, type: 2}
