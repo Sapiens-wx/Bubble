@@ -10,8 +10,10 @@ using UnityEngine.ResourceManagement.ResourceProviders;
 public class SceneLoader : MonoBehaviour
 {
     public Transform playerTrans;
+    public Transform bubbleTrans;
     public Vector3 firstPosition;
     public Vector3 menuPosition;
+    public Vector3 bubblePosition;
     
     [Header("Event Monitor")]
     public SceneLoadEventSO loadEventSo;
@@ -25,6 +27,7 @@ public class SceneLoader : MonoBehaviour
     private GameSceneSO currentLoadedScene;
     private GameSceneSO sceneToLoad;
     private Vector3 positionToGo;
+    private Vector3 bubbleToGo;
     private bool fadeScreen;
     private bool isLoading;
     
@@ -54,7 +57,7 @@ public class SceneLoader : MonoBehaviour
     private void NewGame()
     {
         sceneToLoad = firstLoadScene;
-        OnLoadRequestEvent(sceneToLoad, firstPosition, true);
+        OnLoadRequestEvent(sceneToLoad, firstPosition, bubblePosition,true);
     }
     
 /// <summary>
@@ -63,7 +66,7 @@ public class SceneLoader : MonoBehaviour
 /// <param name="loacationToLoad"></param>
 /// <param name="posToGo"></param>
 /// <param name="fadeScreen"></param>
-    private void OnLoadRequestEvent(GameSceneSO loacationToLoad, Vector3 posToGo, bool fadeScreen)
+    private void OnLoadRequestEvent(GameSceneSO loacationToLoad, Vector3 posToGo, Vector3 bubToGo, bool fadeScreen)
     {
         if(isLoading)
             return;
@@ -71,6 +74,7 @@ public class SceneLoader : MonoBehaviour
         isLoading = true;
         sceneToLoad = loacationToLoad;
         positionToGo = posToGo;
+        bubbleToGo = bubToGo;
         this.fadeScreen = fadeScreen;
 
         if (currentLoadedScene != null)
@@ -114,6 +118,8 @@ public class SceneLoader : MonoBehaviour
         currentLoadedScene = sceneToLoad;
 
         playerTrans.position = positionToGo;
+        
+        bubbleTrans.position = bubbleToGo;
         
         playerTrans.gameObject.SetActive(true);
         if (fadeScreen)
