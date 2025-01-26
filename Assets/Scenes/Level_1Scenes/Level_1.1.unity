@@ -442,12 +442,16 @@ PrefabInstance:
       value: Terminal
       objectReference: {fileID: 0}
     - target: {fileID: 8599194023638576653, guid: 883b7726b5c0a3849a116ab138d8ef3b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5.2209344
+      objectReference: {fileID: 0}
+    - target: {fileID: 8599194023638576653, guid: 883b7726b5c0a3849a116ab138d8ef3b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.68
+      value: 37.8
       objectReference: {fileID: 0}
     - target: {fileID: 8599194023638576653, guid: 883b7726b5c0a3849a116ab138d8ef3b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.3
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8599194023638576653, guid: 883b7726b5c0a3849a116ab138d8ef3b, type: 3}
       propertyPath: m_LocalPosition.z

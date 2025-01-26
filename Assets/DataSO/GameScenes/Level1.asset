@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 0
   sublevels:
-  - RockyScene
-  - RockyScene
-  tag: 1
-  collected: 0
+  - Level_1.1
+  tag: 3
+  collected: 1

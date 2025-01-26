@@ -62,6 +62,14 @@ public class AudioManager : MonoBehaviour
         
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            AudioManager.instance.SetEventEmitter(FMODEvents.instance.callBackPt2, AudioManager.instance.bubbleChannel2);
+        }
+    }
+
     public EventInstance SetEventInstance(EventReference eventReference)
     {
         EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
@@ -72,6 +80,7 @@ public class AudioManager : MonoBehaviour
 
     public StudioEventEmitter SetEventEmitter(EventReference eventReference, GameObject emitterGameObject)
     {
+        Debug.Log("play emitter sound | " + eventReference + " | " + emitterGameObject.name);
         StudioEventEmitter emitter = emitterGameObject.GetComponent<StudioEventEmitter>();
         emitter.EventReference = eventReference;
         emitter.Play();
