@@ -2639,6 +2639,11 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 1
   m_ApplyActiveColorSpace: 1
+--- !u!1 &1725031979 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5904595338794465865, guid: 760e195e1ceb5a247bf0cbb9aa6d529b, type: 3}
+  m_PrefabInstance: {fileID: 2803165008875640122}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1810597363
 GameObject:
   m_ObjectHideFlags: 0
@@ -3644,6 +3649,48 @@ MonoBehaviour:
       Data3: -1594470470
       Data4: 1344543738
     Path: event:/SFX/SFX_fish_charging
+  <fishSprint>k__BackingField:
+    Guid:
+      Data1: -1673024992
+      Data2: 1242151975
+      Data3: 1180246463
+      Data4: -1307727884
+    Path: event:/SFX/SFX_fish_sprint
+  <fishIdle>k__BackingField:
+    Guid:
+      Data1: 1692950608
+      Data2: 1130316251
+      Data3: 1807221893
+      Data4: -647160206
+    Path: event:/SFX/SFX_fish_idle
+  <callBackPt1>k__BackingField:
+    Guid:
+      Data1: -271665293
+      Data2: 1335762951
+      Data3: 1290952087
+      Data4: 580792321
+    Path: event:/SFX/SFX_callback_pt1
+  <callBackPt2>k__BackingField:
+    Guid:
+      Data1: 1719771647
+      Data2: 1111972241
+      Data3: 2089644716
+      Data4: 1194346389
+    Path: event:/SFX/SFX_callback_pt2
+  <fullyCharged>k__BackingField:
+    Guid:
+      Data1: 1360573891
+      Data2: 1089148901
+      Data3: 1812823947
+      Data4: 936747663
+    Path: event:/SFX/SFX_fully_charged
+  <glitch>k__BackingField:
+    Guid:
+      Data1: -1195356261
+      Data2: 1145129812
+      Data3: -1389765717
+      Data4: -1990695068
+    Path: event:/SFX/SFX_glitch
 --- !u!1 &1987796697
 GameObject:
   m_ObjectHideFlags: 0
@@ -3689,6 +3736,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishObj: {fileID: 408701142}
+  beepingOrbObj: {fileID: 1725031979}
   bubbleObj: {fileID: 121142130}
 --- !u!1 &2085250821
 GameObject:

@@ -90,6 +90,9 @@ public class Player : MonoBehaviour
         cc.enabled=true;
     }
     public void OnReturnToBubble(){
+        //play trying to call back bubble sound
+        AudioManager.instance.SetEventEmitter(FMODEvents.instance.callBackPt1, this.gameObject);
+
         if(Bubble.inst.insideBubble) return;
         rgb.velocity=Vector2.zero;
         rgb.simulated=false;

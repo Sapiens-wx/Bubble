@@ -14,6 +14,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Player GameObjects")]
     [SerializeField] private GameObject fishObj;
+    [SerializeField] private GameObject beepingOrbObj;
     [SerializeField] private GameObject bubbleObj;
     // Start is called before the first frame update
     void Awake()
@@ -21,6 +22,7 @@ public class AudioManager : MonoBehaviour
         instance = this;
         eventInstances = new List<EventInstance>();
         eventEmitters = new List<StudioEventEmitter>();
+        
     }
 
     public EventInstance CreateEventInstance(EventReference eventReference)
@@ -34,11 +36,12 @@ public class AudioManager : MonoBehaviour
     {
         StudioEventEmitter emitter = emitterGameObject.GetComponent<StudioEventEmitter>();
         emitter.EventReference = eventReference;
+        emitter.Play();
         eventEmitters.Add(emitter);
         return emitter;
     }
 
-    public StudioEventEmitter StopEventEmitter(EventReference eventReference, GameObject emitterGameObject)
+    public StudioEventEmitter StopEventEmitter(GameObject emitterGameObject)
     {
         StudioEventEmitter emitter = emitterGameObject.GetComponent<StudioEventEmitter>();
         emitter.Stop();
