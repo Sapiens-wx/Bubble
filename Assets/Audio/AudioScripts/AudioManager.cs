@@ -64,10 +64,7 @@ public class AudioManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.E))
-        {
-            AudioManager.instance.SetEventEmitter(FMODEvents.instance.callBackPt2, AudioManager.instance.bubbleChannel2);
-        }
+
     }
 
     public EventInstance SetEventInstance(EventReference eventReference)
