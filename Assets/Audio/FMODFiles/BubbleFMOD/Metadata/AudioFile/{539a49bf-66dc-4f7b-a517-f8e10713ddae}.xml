@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.02.00">
+<objects serializationModel="Studio.02.03.00">
 	<object class="AudioFile" id="{539a49bf-66dc-4f7b-a517-f8e10713ddae}">
 		<property name="assetPath">
 			<value>Music/OST_OutOfBubble_Drums.wav</value>

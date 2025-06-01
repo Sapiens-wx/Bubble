@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.02.00">
+<objects serializationModel="Studio.02.03.00">
 	<object class="AudioFile" id="{ee884566-50ca-482c-8ef8-4f818dcef6b4}">
 		<property name="assetPath">
 			<value>SFX_Mixed/SFX_fish_sprint_short_4.wav</value>

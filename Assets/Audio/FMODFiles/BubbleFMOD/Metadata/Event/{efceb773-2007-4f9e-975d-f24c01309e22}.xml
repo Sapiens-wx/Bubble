@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.02.00">
+<objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{efceb773-2007-4f9e-975d-f24c01309e22}">
 		<property name="name">
 			<value>SFX_callback_pt1</value>
@@ -72,6 +72,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{06078fc7-8ca9-4dfb-a334-2400967c9c9d}">
+		<property name="volume">
+			<value>-5</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{fb2381be-cc51-41b3-97cf-b77244a143e9}</destination>
 		</relationship>

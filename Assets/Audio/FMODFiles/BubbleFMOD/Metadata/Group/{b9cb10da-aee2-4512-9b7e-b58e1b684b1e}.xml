@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.02.00">
+<objects serializationModel="Studio.02.03.00">
 	<object class="MixerGroup" id="{b9cb10da-aee2-4512-9b7e-b58e1b684b1e}">
 		<property name="name">
 			<value>MusicLevelSelect</value>

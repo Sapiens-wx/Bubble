@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.02.00">
+<objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{5118b5c3-17e5-40eb-8b7f-0d6c8fa2d537}">
 		<property name="name">
 			<value>SFX_fully_charged</value>

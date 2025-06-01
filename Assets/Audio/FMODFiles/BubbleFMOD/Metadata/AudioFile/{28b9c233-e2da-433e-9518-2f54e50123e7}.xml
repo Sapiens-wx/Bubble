@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.02.00">
+<objects serializationModel="Studio.02.03.00">
 	<object class="AudioFile" id="{28b9c233-e2da-433e-9518-2f54e50123e7}">
 		<property name="assetPath">
 			<value>SFX_Mixed/SFX_callback_pt2_3.wav</value>

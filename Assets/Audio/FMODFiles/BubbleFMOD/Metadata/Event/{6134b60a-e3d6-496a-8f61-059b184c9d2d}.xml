@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.02.00">
+<objects serializationModel="Studio.02.03.00">
 	<object class="Event" id="{6134b60a-e3d6-496a-8f61-059b184c9d2d}">
 		<property name="name">
 			<value>SFX_fish_death</value>
@@ -73,7 +73,7 @@
 	</object>
 	<object class="EventMixerMaster" id="{3f897981-7d57-400f-9911-5ac72c042c70}">
 		<property name="volume">
-			<value>10</value>
+			<value>-3</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{c219aab4-6592-411e-af79-3fc5d6ec6e25}</destination>

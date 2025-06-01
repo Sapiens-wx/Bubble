@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.02.00">
+<objects serializationModel="Studio.02.03.00">
 	<object class="AudioFile" id="{e2bcfef1-d9c1-4b2f-97c7-565324201c10}">
 		<property name="assetPath">
 			<value>SFX_Mixed/SFX_fish_charging_bubble_3.wav</value>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<objects serializationModel="Studio.02.02.00">
+<objects serializationModel="Studio.02.03.00">
 	<object class="AudioFile" id="{68407802-44f6-456c-9ff4-99a5a6eedc56}">
 		<property name="assetPath">
 			<value>SFX_Mixed/SFX_glitch_2.wav</value>
